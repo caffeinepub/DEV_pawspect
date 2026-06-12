@@ -1,0 +1,1343 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = 
+ record {
+   email: opt text;
+   name: text;
+   role: text;
+ };
+type UpdateStopTime = 
+ record {
+   id: Id;
+   stopTime: Time;
+ };
+type UpdateSplits = 
+ record {
+   bookingId: Id;
+   splits: vec PaymentSplit;
+ };
+type Update = 
+ record {
+   bio: text;
+   hourlyRate: nat;
+   id: Id;
+   isActive: bool;
+   location: text;
+   name: text;
+   phone: text;
+   photoUrl: text;
+   services: vec text;
+ };
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type TimeSlot = 
+ record {
+   endTime: Time;
+   startTime: Time;
+ };
+type Time = int;
+type TicketStatus = 
+ variant {
+   adminAccessing;
+   open;
+   resolved;
+ };
+type TeamMessage = 
+ record {
+   content: text;
+   msgId: text;
+   msgType: variant {
+              channel;
+              jobThread;
+            };
+   senderSitterId: nat;
+   sentAt: int;
+   teamId: text;
+   threadBookingId: opt nat;
+ };
+type TeamInvite = 
+ record {
+   createdAt: int;
+   expiresAt: int;
+   fromSitterId: nat;
+   inviteCode: text;
+   inviteId: text;
+   status: variant {
+             accepted;
+             declined;
+             expired;
+             pending;
+           };
+   teamId: opt text;
+   toSitterId: opt nat;
+ };
+type Team = 
+ record {
+   createdAt: int;
+   memberIds: vec nat;
+   name: text;
+   splitPercentages: vec record {
+                           nat;
+                           nat;
+                         };
+   status: variant {
+             active;
+             dissolved;
+           };
+   teamId: text;
+ };
+type SubscriptionRecord = 
+ record {
+   frozenAt: opt int;
+   isFreePlan: opt bool;
+   isFrozen: bool;
+   isSubscribed: bool;
+   lastPaymentAt: opt int;
+   stripeCustomerId: opt text;
+   stripeSubscriptionId: opt text;
+   subscriptionStartedAt: opt int;
+   trialExpiredEmailSent: opt bool;
+   trialReminderSent: opt bool;
+   trialStartedAt: opt int;
+ };
+type StripeSessionStatus = 
+ variant {
+   completed: record {
+                response: text;
+                userPrincipal: opt text;
+              };
+   failed: record {error: text;};
+ };
+type StripeConfiguration = 
+ record {
+   allowedCountries: vec text;
+   secretKey: text;
+ };
+type SitterPublicV2Extension = 
+ record {
+   acceptingNewClients: opt bool;
+   bannerUrl: opt text;
+   certificationsList: opt vec text;
+   credentialChecklist: opt CredentialChecklist;
+   galleryPhotos: opt vec text;
+   pageComponents: opt PageComponentVisibility;
+   petTypesServed: opt vec text;
+   pinnedPromoOfferId: opt text;
+   responseTime: opt text;
+   serviceRadius: opt nat;
+   serviceZip: opt text;
+ };
+type SitterProfileV2Update = 
+ record {
+   acceptingNewClients: opt bool;
+   bannerUrl: opt text;
+   certificationsList: opt vec text;
+   credentialChecklist: opt CredentialChecklist;
+   galleryPhotos: opt vec text;
+   pageComponents: opt PageComponentVisibility;
+   petTypesServed: opt vec text;
+   pinnedPromoOfferId: opt text;
+   responseTime: opt text;
+   serviceRadius: opt nat;
+   serviceZip: opt text;
+   sitterId: nat;
+ };
+type SitterLicenseStatus = 
+ record {
+   isFrozen: bool;
+   isGrandfathered: bool;
+   isLicensed: bool;
+   isSubscribed: bool;
+   stripeCustomerId: opt text;
+   stripeSubscriptionId: opt text;
+   subscriptionStatus: text;
+   trialActive: bool;
+   trialDaysRemaining: opt nat;
+   trialStartedAt: opt int;
+ };
+type SitterBookingStats = 
+ record {
+   completedVisits: nat;
+   repeatClients: nat;
+   totalBookings: nat;
+   uniqueClients: nat;
+ };
+type ShoppingItem = 
+ record {
+   currency: text;
+   priceInCents: nat;
+   productDescription: text;
+   productName: text;
+   quantity: nat;
+ };
+type ServiceStatus = 
+ variant {
+   checkedIn;
+   completed;
+   inProgress;
+   issueReported;
+ };
+type ServiceSlot = 
+ record {
+   durationMinutes: nat;
+   endTime: text;
+   ratePerHour: nat;
+   "service": text;
+   sitterId: nat;
+   startTime: text;
+ };
+type RecurringGroupCreation = 
+ record {
+   agreements: BookingAgreements;
+   clientInfo: ClientInfo;
+   endTime: text;
+   petInfo: vec PetInfo;
+   recurrenceRule: RecurrenceRule;
+   serviceDuration: nat;
+   serviceIds: vec text;
+   sitterId: nat;
+   startTime: text;
+   totalCostCents: nat;
+ };
+type RecurrenceRule = 
+ record {
+   daysOfWeek: vec nat8;
+   endDate: opt Time;
+   occurrenceCount: opt nat;
+   pattern: RecurrencePattern;
+   startDate: Time;
+ };
+type RecurrencePattern = 
+ variant {
+   biweekly;
+   monthly;
+   weekly;
+ };
+type Public__8 = 
+ record {
+   adHocClientContact: opt text;
+   agreements: opt BookingAgreements;
+   alternativeWindows: opt vec AlternativeWindow;
+   clientEmail: text;
+   clientName: text;
+   clientPhone: text;
+   createdAt: Time;
+   declineReason: opt text;
+   endDate: Time;
+   id: Id;
+   isAdHoc: bool;
+   isRecurring: bool;
+   notes: text;
+   paymentSessionId: opt text;
+   pets: vec Pet;
+   recurrenceEndDate: opt Time;
+   recurrencePattern: opt RecurrencePattern;
+   schedule: opt vec DaySchedule;
+   serviceSchedule: opt vec DayServiceSchedule;
+   services: vec text;
+   sitterIds: vec nat;
+   startDate: Time;
+   status: BookingStatus;
+   stripePaymentIntentId: opt text;
+   tip: opt nat;
+ };
+type Public__7 = 
+ record {
+   action: AuditAction;
+   deletedBy: principal;
+   entityId: nat;
+   entityType: text;
+   id: Id;
+   snapshot: text;
+   timestamp: Time;
+ };
+type Public__6 = 
+ record {
+   actualEndTime: opt Time;
+   adHocItems: vec AdHocLineItem;
+   bookingId: Id;
+   completionNotes: opt text;
+   confirmedAt: opt Time;
+   discountAmount: opt nat;
+   discountPercent: opt nat;
+   manualConfirmedBy: opt principal;
+   method: PaymentMethod;
+   notes: opt text;
+   originalAmount: opt nat;
+   paidDate: opt text;
+   paymentMethodDetails: opt PaymentMethodDetails;
+   splits: vec PaymentSplit;
+   status: PaymentStatus;
+   stripePaymentIntentId: opt text;
+   totalAmount: nat;
+ };
+type Public__5 = 
+ record {
+   bookingId: nat;
+   createdAt: Time;
+   rating: float64;
+   reviewText: text;
+ };
+type Public__4 = 
+ record {
+   accessGrantedAt: opt int;
+   accessRevokedAt: opt int;
+   adminNotes: opt text;
+   createdAt: int;
+   id: text;
+   issue: text;
+   resolvedAt: opt int;
+   sitterId: principal;
+   sitterName: text;
+   status: TicketStatus;
+ };
+type Public__3 = 
+ record {
+   amountCents: nat;
+   bookingId: nat;
+   clientName: text;
+   createdAt: Time;
+   sitterId: nat;
+ };
+type Public__2 = 
+ record {
+   bookingId: Id;
+   createdAt: Time;
+   id: Id;
+   notes: text;
+   sitterId: Id;
+   startTime: opt Time;
+   status: ServiceStatus;
+   stopTime: opt Time;
+ };
+type Public__1 = 
+ record {
+   ratePerHour: nat;
+   "service": text;
+ };
+type Public = 
+ record {
+   bio: text;
+   birthdate: opt int;
+   hourlyRate: nat;
+   id: nat;
+   isActive: bool;
+   isAnonymized: opt bool;
+   location: text;
+   name: text;
+   owner: opt principal;
+   phone: text;
+   photoUrl: text;
+   rating: float64;
+   reviewCount: nat;
+   serviceRates: vec Public__1;
+   services: vec text;
+ };
+type PetInfo = 
+ record {
+   breed: text;
+   name: text;
+   notes: text;
+   "type": text;
+ };
+type Pet = 
+ record {
+   breed: opt text;
+   petName: text;
+   petNotes: opt text;
+   petType: text;
+ };
+type PaymentStatus = 
+ variant {
+   paid;
+   pending;
+   refunded;
+ };
+type PaymentSplit = 
+ record {
+   amount: nat;
+   paid: bool;
+   sitterId: Id;
+ };
+type PaymentMethodDetails = 
+ variant {
+   applePayCash: record {sitterPhone: text;};
+   cash: record {instructions: text;};
+   venmo: record {handle: text;};
+ };
+type PaymentMethod = 
+ variant {
+   manual;
+   stripe;
+ };
+type PageComponentVisibility = 
+ record {
+   showAvailability: bool;
+   showCertifications: bool;
+   showCredentials: bool;
+   showGallery: bool;
+   showPetTypes: bool;
+   showPromo: bool;
+   showRepeatClients: bool;
+   showResponseTime: bool;
+   showReviews: bool;
+   showStats: bool;
+ };
+type OccurrenceAvailability = 
+ record {
+   available: bool;
+   conflictReason: opt text;
+   date: Time;
+ };
+type NotificationRecord = 
+ record {
+   body: text;
+   createdAt: int;
+   id: nat;
+   isRead: bool;
+   notificationType: text;
+   recipientSitterId: nat;
+   title: text;
+ };
+type Message = 
+ record {
+   content: text;
+   senderId: opt principal;
+   senderName: text;
+   timestamp: Time;
+ };
+type JobThread = 
+ record {
+   bookingId: nat;
+   createdAt: int;
+   duties: vec DutyAssignment;
+   status: variant {
+             closed;
+             open;
+           };
+   teamId: text;
+   threadId: text;
+ };
+type Id = nat;
+type GroupStatus = 
+ variant {
+   active;
+   cancelled;
+   completed;
+ };
+type DutyTask = 
+ record {
+   done: bool;
+   doneAt: opt int;
+   taskId: text;
+   taskLabel: text;
+ };
+type DutyAssignment = 
+ record {
+   assignedSitterId: nat;
+   createdAt: int;
+   description: text;
+   dutyId: text;
+   status: variant {
+             assigned;
+             done;
+             inProgress;
+           };
+   tasks: vec DutyTask;
+ };
+type DiscountType = 
+ variant {
+   fixed;
+   percent;
+ };
+type DealOffer = 
+ record {
+   clientEmails: vec text;
+   couponCode: text;
+   description: text;
+   discountType: DiscountType;
+   discountValue: float64;
+   expirationDate: int;
+   id: text;
+   isActive: bool;
+   maxUses: opt nat;
+   redeemedBy: vec text;
+   redeemedCount: nat;
+   sentAt: int;
+   sitterId: nat;
+ };
+type DayServiceSchedule = 
+ record {
+   date: text;
+   slots: vec ServiceSlot;
+ };
+type DaySchedule = 
+ record {
+   date: Time;
+   slots: vec TimeSlot;
+ };
+type CredentialChecklist = 
+ record {
+   hasBackgroundCheck: opt bool;
+   hasBusinessLicense: opt bool;
+   hasCertificationOrTraining: opt bool;
+   hasReferences: opt bool;
+   isInsuredAndBonded: opt bool;
+   isProfessionalMember: opt bool;
+   usesServiceAgreement: opt bool;
+ };
+type Creation__3 = 
+ record {
+   adHocClientContact: opt text;
+   agreements: opt BookingAgreements;
+   callRequest: opt bool;
+   clientEmail: text;
+   clientName: text;
+   clientPhone: text;
+   endDate: Time;
+   isAdHoc: opt bool;
+   isRecurring: bool;
+   notes: text;
+   pets: vec Pet;
+   recurrenceEndDate: opt Time;
+   recurrencePattern: opt RecurrencePattern;
+   schedule: opt vec DaySchedule;
+   serviceSchedule: opt vec DayServiceSchedule;
+   services: vec text;
+   sitterIds: vec nat;
+   startDate: Time;
+   tip: opt nat;
+ };
+type Creation__2 = 
+ record {
+   bookingId: Id;
+   method: PaymentMethod;
+   notes: opt text;
+   splits: vec PaymentSplit;
+   totalAmount: nat;
+ };
+type Creation__1 = 
+ record {
+   bio: text;
+   birthdate: opt int;
+   hourlyRate: nat;
+   location: text;
+   name: text;
+   phone: text;
+   photoUrl: text;
+   services: vec text;
+ };
+type Creation = 
+ record {
+   bookingId: Id;
+   notes: text;
+   sitterId: Id;
+   startTime: opt Time;
+   status: ServiceStatus;
+ };
+type CoBookingAssignment = 
+ record {
+   assignments: vec record {
+                      nat;
+                      text;
+                    };
+   bookingId: nat;
+   splitAmounts: vec record {
+                       nat;
+                       nat;
+                     };
+   teamId: text;
+ };
+type ClientInfo = 
+ record {
+   email: text;
+   name: text;
+   phone: text;
+ };
+type CRMClient = 
+ record {
+   bookingCount: nat;
+   clientEmail: text;
+   clientName: text;
+   clientPhone: text;
+   lastBookingDate: int;
+   tags: vec text;
+   totalSpent: float64;
+ };
+type BookingStatus = 
+ variant {
+   cancelled;
+   completed;
+   confirmed;
+   declined;
+   pending;
+ };
+type BookingGroup = 
+ record {
+   clientInfo: ClientInfo;
+   createdAt: Time;
+   endTime: text;
+   groupId: text;
+   occurrenceIds: vec nat;
+   petInfo: vec PetInfo;
+   recurrenceRule: RecurrenceRule;
+   serviceIds: vec text;
+   sitterId: nat;
+   startTime: text;
+   status: GroupStatus;
+ };
+type BookingAgreements = 
+ record {
+   callRequest: bool;
+   cancellationPolicy: bool;
+   communications: bool;
+   nonEmploymentAck: bool;
+   privacy: bool;
+   terms: bool;
+   termsVersion: nat;
+ };
+type AvailabilityEntry = 
+ record {
+   dayOfWeek: nat;
+   endTime: nat;
+   startTime: nat;
+ };
+type AuditAction = 
+ variant {
+   AccountAnonymized;
+   AccountFrozen;
+   AccountUnfrozen;
+   AdHocJobCreated;
+   AdminAccessGranted;
+   AdminAccessRevoked;
+   BookingDeclined;
+   BookingDeleted;
+   ConsentRecorded;
+   DiscountApplied;
+   GdprAnonymizationRequested;
+   GdprExportDownloaded;
+   GdprExportRequested;
+   PaymentDeleted;
+   PriceAdjusted;
+   ServiceCompletionUpdated;
+   SitterDeactivated;
+   SitterDeleted;
+   SitterReactivated;
+   SubscriptionCancelled;
+   SubscriptionRecorded;
+   SupportTicketOpened;
+   SupportTicketResolved;
+ };
+type AlternativeWindow = 
+ record {
+   date: text;
+   duration: text;
+   time: text;
+ };
+type AdHocLineItem = 
+ record {
+   amountCents: int;
+   createdAt: int;
+   description: text;
+ };
+service : {
+  _initializeAccessControlWithSecret: (userSecret: text) -> ();
+  acceptInviteByCode: (inviteCode: text) -> (variant {
+                                               err: text;
+                                               ok: Team;
+                                             });
+  addMessage: (bookingId: Id, senderName: text, content: text) -> ();
+  addPhotoConsentLog: (sitterId: nat, photoUrl: text, consent1: bool,
+   consent2: bool, consent3: bool) -> (variant {
+                                         err: text;
+                                         ok;
+                                       });
+  adjustPaymentPrice: (bookingId: Id, newAmount: nat, reason: text) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  adminAnonymizeSitter: (sitterId: Id) -> (variant {
+                                             err: text;
+                                             ok;
+                                           });
+  adminExportSitterData: (sitterId: Id) -> (variant {
+                                              err: text;
+                                              ok: text;
+                                            });
+  anonymizeSitterAccount: () -> (variant {
+                                   err: text;
+                                   ok;
+                                 });
+  approveSitterApplication: (sitterId: Id) -> (variant {
+                                                 err: text;
+                                                 ok;
+                                               });
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  assignCoSitters: (bookingId: nat, teamId: text, assignmentsList:
+   vec record {
+         nat;
+         text;
+       }) -> (variant {
+                err: text;
+                ok: CoBookingAssignment;
+              });
+  assignDuty: (threadId: text, assignedSitterId: nat, description: text,
+   taskLabels: vec text) -> (variant {
+                               err: text;
+                               ok: DutyAssignment;
+                             });
+  assignSitterToFreePlan: (sitterId: Id) -> (variant {
+                                               err: text;
+                                               ok;
+                                             });
+  backfillSitterHandles: () -> (variant {
+                                  err: text;
+                                  ok: nat;
+                                });
+  cancelBookingByClient: (bookingId: Id, cancelReason: text) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  cancelRecurringGroup: (groupId: text, cancelledBy: text) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  cancelSubscription: (sitterId: nat) -> (variant {
+                                            err: text;
+                                            ok;
+                                          });
+  checkAndSendTrialReminder: () -> (variant {
+                                      err: text;
+                                      ok: text;
+                                    });
+  checkSittersAvailabilityForRebook: (sitterIds: vec nat, dates: vec text,
+   services: vec text) ->
+   (vec record {
+          available: bool;
+          reason: text;
+          sitterId: nat;
+        }) query;
+  claimFirstAdmin: () -> (bool);
+  clearAllData: () -> (variant {
+                         err: text;
+                         ok;
+                       });
+  confirmManualPayment: (bookingId: Id) -> ();
+  confirmManualPaymentWithEmail: (bookingId: Id, paidDate: text) ->
+   (variant {
+      err: text;
+      ok: text;
+    });
+  confirmRecurringGroup: (groupId: text) -> (variant {
+                                               err: text;
+                                               ok;
+                                             });
+  confirmRecurringOccurrence: (bookingId: nat) -> (variant {
+                                                     err: text;
+                                                     ok;
+                                                   });
+  confirmStripeCheckoutSession: (sessionId: text) ->
+   (variant {
+      err: text;
+      ok: text;
+    });
+  /// Create an ad hoc job record for a non-app client.
+  /// CRITICAL: clientEmail and clientPhone are always empty — the non-app client
+  /// is never contacted by the app under any circumstances.
+  /// offAppClientAcknowledged MUST be true — sitter affirms the client has no Pawspect relationship.
+  createAdHocJob: (sitterId: nat, clientName: text, adHocClientContact:
+   opt text, "service": text, jobDate: text, startTime: text, endTime: 
+   text, ratePerHourCents: nat, totalAmountCents: nat, coSitterId: opt nat,
+   teamId: opt text, petNames: vec text, notes: opt text,
+   offAppClientAcknowledged: bool) -> (variant {
+                                         err: text;
+                                         ok: Public__8;
+                                       });
+  createBooking: (input: Creation__3) -> (Public__8);
+  createBookingWithCoupon: (input: Creation__3, couponCode: opt text) ->
+   (Public__8);
+  createCheckoutSession: (items: vec ShoppingItem, successUrl: text,
+   cancelUrl: text) -> (text);
+  createDealOffer: (sitterId: nat, discountType: DiscountType, discountValue:
+   float64, description: text, expirationDate: int, clientEmails: vec text,
+   maxUses: opt nat) -> (variant {
+                           err: text;
+                           ok: DealOffer;
+                         });
+  createJobThread: (teamId: text, bookingId: nat) ->
+   (variant {
+      err: text;
+      ok: JobThread;
+    });
+  createNotification: (recipientSitterId: nat, title: text, body: text,
+   notificationType: text) -> (NotificationRecord);
+  createPayment: (input: Creation__2) -> (Public__6);
+  createRecurringBookingGroup: (input: RecurringGroupCreation) ->
+   (variant {
+      err: text;
+      ok: BookingGroup;
+    });
+  createSitterProfile: (input: Creation__1) -> (Public);
+  /// Create a proper subscription checkout session using the configured Stripe Price ID.
+  /// This is what the sitter portal "Subscribe Now" button should call.
+  createSubscriptionCheckoutSession: (successUrl: text, cancelUrl: text) ->
+   (text);
+  createTeamInvite: (toSitterId: nat, proposedName: text, splitPercentages:
+   vec record {
+         nat;
+         nat;
+       }) -> (variant {
+                err: text;
+                ok: TeamInvite;
+              });
+  declineBookingRequest: (bookingId: Id, declineReason: text,
+   alternativeWindows: vec AlternativeWindow) -> (variant {
+                                                    err: text;
+                                                    ok;
+                                                  });
+  declineRecurringOccurrence: (bookingId: nat, reason: text, alternatives:
+   vec record {
+         date: text;
+         duration: text;
+         time: text;
+       }) -> (variant {
+                err: text;
+                ok;
+              });
+  deleteBooking: (bookingId: Id) -> (variant {
+                                       err: text;
+                                       ok;
+                                     });
+  deletePayment: (bookingId: Id) -> (variant {
+                                       err: text;
+                                       ok;
+                                     });
+  deleteSitterProfile: (id: Id) -> (variant {
+                                      err: text;
+                                      ok;
+                                    });
+  dissolveTeamAdmin: (teamId: text) -> (variant {
+                                          err: text;
+                                          ok;
+                                        });
+  exportSitterData: () -> (variant {
+                             err: text;
+                             ok: text;
+                           });
+  fixSitterZipCodes: () -> (variant {
+                              err: text;
+                              ok: text;
+                            });
+  freezeSitterAccount: (sitterId: Id) -> (variant {
+                                            err: text;
+                                            ok;
+                                          });
+  generateTeamInviteLink: (teamId: text) -> (variant {
+                                               err: text;
+                                               ok: text;
+                                             });
+  getActiveSitters: () -> (vec Public) query;
+  /// Return all ad hoc jobs for a given sitter (isAdHoc = true and sitterId in sitterIds).
+  getAdHocJobsBySitter: (sitterId: nat) -> (vec Public__8) query;
+  getAdminBookingAnalytics: () ->
+   (record {
+      avgServiceDurationMinutes: float64;
+      avgTimeToPaymentMinutes: float64;
+      serviceTypeCounts: vec record {
+                               text;
+                               nat;
+                             };
+      serviceTypeDurations: vec record {
+                                  text;
+                                  float64;
+                                };
+      serviceTypeRevenue: vec record {
+                                text;
+                                nat;
+                              };
+    }) query;
+  getAdminBookingStats: () ->
+   (record {
+      cancelledCount: nat;
+      completedCount: nat;
+      confirmedCount: nat;
+      confirmedRevenue: nat;
+      pendingCount: nat;
+      pendingRevenue: nat;
+      totalRevenue: nat;
+    }) query;
+  getAdminNotificationEmail: () -> (text) query;
+  getAdminPendingRevenue: () -> (nat) query;
+  getAdminPendingRevenueBreakdown: () ->
+   (vec record {
+          amount: nat;
+          bookingId: nat;
+          clientName: text;
+        }) query;
+  getAllBookings: () -> (vec Public__8) query;
+  getAllPayments: () -> (vec Public__6) query;
+  getAllSitterHandles: () -> (vec record {
+                                    nat;
+                                    text;
+                                  }) query;
+  getAllSitters: () -> (vec Public) query;
+  getAllSubscriptionStates: () ->
+   (vec record {
+          nat;
+          SubscriptionRecord;
+        }) query;
+  getAllTeamsAdmin: () -> (vec Team) query;
+  /// Returns current usage counts and configured limits.
+  getApiUsageLimits: () ->
+   (record {
+      dailyCount: nat;
+      dailyLimit: nat;
+      monthlyCount: nat;
+      monthlyLimit: nat;
+      resetDate: text;
+    }) query;
+  getAuditLog: () -> (vec Public__7) query;
+  getAvailableHourlyWindows: (date: text) ->
+   (vec record {
+          availableSitterCount: nat;
+          endTime: text;
+          startTime: text;
+        }) query;
+  getAvailableSittersForWindow: (date: text, startTime: text, endTime:
+   text) -> (vec Public) query;
+  getBookingHeatmapData: () ->
+   (vec
+     record {
+       confirmedCount: nat;
+       date: text;
+       hour: nat;
+       pendingCount: nat;
+       sitterId: nat;
+       sitterName: text;
+     }) query;
+  getBookingsByClientEmail: (clientEmail: text) -> (vec Public__8) query;
+  getBookingsByClientPhone: (clientPhone: text) -> (vec Public__8) query;
+  getBookingsBySitter: (sitterId: Id) -> (vec Public__8) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCoBookingAssignment: (bookingId: nat) -> (opt CoBookingAssignment) query;
+  getCompletedBookingsByContact: (email: text, phone: text) ->
+   (vec Public__8) query;
+  getCompletedBookingsCount: (sitterId: nat) -> (nat) query;
+  getDealOffersBySitter: (sitterId: nat) -> (vec DealOffer) query;
+  getGrantedAdmins: () -> (vec principal) query;
+  getJobThread: (bookingId: nat) -> (opt JobThread) query;
+  getJobThreadMessages: (bookingId: nat, limit: nat) ->
+   (vec TeamMessage) query;
+  getJobThreadsForTeam: (teamId: text) -> (vec JobThread) query;
+  getMessages: (bookingId: Id) -> (vec Message) query;
+  getMySupportTickets: () -> (vec Public__4) query;
+  getMyTeams: () -> (vec Team) query;
+  getNotificationsBySitter: (sitterId: nat) -> (vec NotificationRecord) query;
+  getPayment: (bookingId: Id) -> (opt Public__6) query;
+  getPaymentAuditLog: (bookingId: Id) -> (vec Public__7) query;
+  getPaymentsByBookingIds: (bookingIds: vec text) -> (vec Public__6) query;
+  getPendingInvitesForSitter: (sitterId: nat) -> (vec TeamInvite) query;
+  getPublicSitterProfile: (handle: text) ->
+   (opt
+     record {
+       averageRating: float64;
+       badges: vec text;
+       bio: opt text;
+       id: nat;
+       isActive: bool;
+       name: text;
+       profilePhotoUrl: opt text;
+       reviewCount: nat;
+       reviews:
+        vec
+         record {
+           clientName: text;
+           comment: opt text;
+           createdAt: int;
+           rating: nat;
+         };
+       services:
+        vec record {
+              duration: opt text;
+              price: float64;
+              serviceName: text;
+            };
+     }) query;
+  getRecurringGroup: (groupId: text) -> (opt BookingGroup) query;
+  getRecurringGroupsByClient: (clientEmail: text) -> (vec BookingGroup) query;
+  getRecurringGroupsBySitter: (sitterId: nat) -> (vec BookingGroup) query;
+  getReviewsBySitter: (sitterId: Id) -> (vec Public__5) query;
+  getServiceLogsByBooking: (bookingId: Id) -> (vec Public__2) query;
+  getSitterAvailability: (sitterId: Id) -> (vec AvailabilityEntry) query;
+  getSitterBookingStats: (sitterId: nat) -> (SitterBookingStats) query;
+  getSitterClientsForCRM: (sitterId: nat) -> (vec CRMClient) query;
+  getSitterCredentials: (sitterId: nat) -> (opt CredentialChecklist) query;
+  getSitterExtendedPublic: (sitterId: nat) ->
+   (opt SitterPublicV2Extension) query;
+  getSitterHandle: (sitterId: Id) -> (opt text) query;
+  getSitterLicenseStatus: () -> (SitterLicenseStatus) query;
+  getSitterPageComponents: (sitterId: nat) ->
+   (opt PageComponentVisibility) query;
+  getSitterPrivateData: (sitterId: nat) ->
+   (variant {
+      err: text;
+      ok: record {
+            earningsGoal: opt nat;
+            emergencyContact: opt text;
+          };
+    });
+  getSitterProfile: (id: Id) -> (Public) query;
+  getSitterPublicReviews: (sitterId: Id, limit: nat) ->
+   (vec
+     record {
+       clientName: text;
+       comment: opt text;
+       createdAt: int;
+       rating: nat;
+     }) query;
+  getSitterReviews: (sitterId: Id) -> (vec Public__5) query;
+  getSitterServiceRates: (sitterId: Id) -> (vec Public__1) query;
+  getSitterStatsById: (sitterId: Id) ->
+   (record {
+      adHocJobCount: nat;
+      currentMonthEarningsCents: nat;
+      repeatClientCount: nat;
+      repeatClientRatePct: float64;
+      totalCompletedBookings: nat;
+      totalEarningsCents: nat;
+    }) query;
+  getSittersForSelection: (clientZip: text) ->
+   (vec
+     record {
+       acceptingNewClients: opt bool;
+       bio: text;
+       birthdate: opt int;
+       bookingsCompleted: nat;
+       credentialsChecklist:
+        record {
+          hasBackgroundCheck: opt bool;
+          hasBusinessLicense: opt bool;
+          hasCertificationOrTraining: opt bool;
+          hasReferences: opt bool;
+          isInsuredAndBonded: opt bool;
+          isProfessionalMember: opt bool;
+          usesServiceAgreement: opt bool;
+        };
+       hourlyRate: nat;
+       id: nat;
+       isActive: bool;
+       isAnonymized: opt bool;
+       location: text;
+       memberSince: opt int;
+       name: text;
+       owner: opt principal;
+       photoUrl: text;
+       rating: float64;
+       repeatClientRate: nat;
+       reviewCount: nat;
+       serviceRadius: opt nat;
+       serviceRates: vec record {
+                           ratePerHour: nat;
+                           "service": text;
+                         };
+       serviceZip: opt text;
+       services: vec text;
+     }) query;
+  getSittersNearZip: (clientZip: text, _radiusMiles: nat) ->
+   (vec
+     record {
+       acceptingNewClients: opt bool;
+       bio: text;
+       birthdate: opt int;
+       hourlyRate: nat;
+       id: nat;
+       isActive: bool;
+       isAnonymized: opt bool;
+       location: text;
+       name: text;
+       owner: opt principal;
+       photoUrl: text;
+       rating: float64;
+       reviewCount: nat;
+       serviceRadius: opt nat;
+       serviceRates: vec record {
+                           ratePerHour: nat;
+                           "service": text;
+                         };
+       serviceZip: opt text;
+       services: vec text;
+     }) query;
+  getStripeFreePlanPriceId: () -> (text) query;
+  getStripePublicConfig: () ->
+   (record {
+      isLiveMode: bool;
+      priceId: text;
+      publishableKey: text;
+    }) query;
+  getStripeSessionStatus: (sessionId: text) -> (StripeSessionStatus);
+  getSubscriptionState: (sitterId: nat) -> (opt SubscriptionRecord) query;
+  getSupportTickets: () -> (vec Public__4) query;
+  getTeamBookings: (teamId: text) -> (vec nat) query;
+  getTeamById: (teamId: text) -> (opt Team) query;
+  getTeamMessages: (teamId: text, limit: nat) -> (vec TeamMessage) query;
+  getTipsBySitter: (sitterId: Id) -> (vec Public__3) query;
+  getUnreadNotificationCount: (sitterId: nat) -> (nat) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  grantAdminAccess: (targetPrincipal: principal) -> (variant {
+                                                       err: text;
+                                                       ok;
+                                                     });
+  grantSupportAccess: (ticketId: text) -> (variant {
+                                             err: text;
+                                             ok: text;
+                                           });
+  handleStripeWebhook: (eventType: text, payload: text,
+   stripeSignatureHeader: text) -> ();
+  hasSupportAccess: (sitterPrincipal: principal) -> (bool) query;
+  initSitterTrial: (sitterId: nat) -> ();
+  isAdminAssigned: () -> (bool) query;
+  isCallerAdmin: () -> (bool) query;
+  isSitterFrozen: (sitterId: nat) -> (bool) query;
+  isStripeConfigured: () -> (bool) query;
+  leaveTeam: (teamId: text) -> (variant {
+                                  err: text;
+                                  ok;
+                                });
+  markNotificationRead: (notificationId: nat) -> (variant {
+                                                    err: text;
+                                                    ok;
+                                                  });
+  openSupportTicket: (issue: text) -> (variant {
+                                         err: text;
+                                         ok: text;
+                                       });
+  postServiceLog: (input: Creation) -> (Public__2);
+  /// Records one API call for the given date string (YYYY-MM-DD).
+  /// Resets the daily counter whenever the date changes.
+  recordApiCall: (date: text) -> ();
+  recordSubscriptionPayment: (sitterId: nat, stripeSubscriptionId: text,
+   stripeCustomerId: text) -> (variant {
+                                 err: text;
+                                 ok;
+                               });
+  recordTip: (sitterId: Id, bookingId: Id, amountCents: nat) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  redeemCoupon: (couponCode: text, clientEmail: text) ->
+   (variant {
+      err: text;
+      ok: DealOffer;
+    });
+  rejectSitterApplication: (sitterId: Id) -> (variant {
+                                                err: text;
+                                                ok;
+                                              });
+  resolveSupportTicket: (ticketId: text, notes: text) ->
+   (variant {
+      err: text;
+      ok: text;
+    });
+  respondToInvite: (inviteId: text, accept: bool) ->
+   (variant {
+      err: text;
+      ok: Team;
+    });
+  revokeAdminAccess: (targetPrincipal: principal) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  saveCallerUserProfile: (profile: UserProfile) -> (variant {
+                                                      err: text;
+                                                      ok;
+                                                    });
+  seedBaileyLinneaTeam: () -> (variant {
+                                 err: text;
+                                 ok: Team;
+                               });
+  seedBaileyLinneaTeamWithIds: (baileyId: nat, linneaId: nat) ->
+   (variant {
+      err: text;
+      ok: Team;
+    });
+  sendBookingConfirmationEmail: (bookingId: Id) -> ();
+  sendBookingConfirmedEmails: (bookingId: Id) -> ();
+  sendClientNudgeSitter: (bookingIdText: text) ->
+   (variant {
+      err: text;
+      ok: text;
+    });
+  sendInvoiceToClient: (bookingId: Id) -> (variant {
+                                             err: text;
+                                             ok: text;
+                                           });
+  sendPaymentReminder: (bookingId: Id) -> (variant {
+                                             err: text;
+                                             ok: text;
+                                           });
+  sendRecurringBookingEmails: (groupId: text) -> ();
+  sendRecurringGroupConfirmedEmails: (groupId: text) -> ();
+  sendServiceCompletionEmail: (bookingId: Id) -> ();
+  sendTeamMessage: (teamId: text, senderSitterId: nat, content: text,
+   threadBookingId: opt nat) -> (variant {
+                                   err: text;
+                                   ok: TeamMessage;
+                                 });
+  setAdminNotificationEmail: (email: text) -> (variant {
+                                                 err: text;
+                                                 ok;
+                                               });
+  /// Admin-only: update the daily and monthly call limits.
+  setApiLimits: (daily: nat, monthly: nat) -> ();
+  setCallerAsAdmin: () -> (variant {
+                             err: text;
+                             ok;
+                           });
+  setFreePlanPriceId: (priceId: text) -> (variant {
+                                            err: text;
+                                            ok;
+                                          });
+  setInvoicePaymentMethod: (bookingId: Id, method: PaymentMethodDetails) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  setSitterAvailability: (sitterId: Id, entries: vec AvailabilityEntry) -> ();
+  setSitterHandle: (sitterId: Id, handle: text) -> (variant {
+                                                      err: text;
+                                                      ok;
+                                                    });
+  setSitterPageComponents: (sitterId: nat, components:
+   PageComponentVisibility) -> (variant {
+                                  err: text;
+                                  ok;
+                                });
+  setSitterServiceRates: (sitterId: Id, rates: vec Public__1) -> ();
+  setStripeConfiguration: (config: StripeConfiguration) -> ();
+  setStripeWebhookSecret: (secret: text) -> (variant {
+                                               err: text;
+                                               ok;
+                                             });
+  submitReview: (sitterId: Id, rating: float64, reviewText: text, bookingId:
+   Id) -> ();
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+  unfreezeSitterAccount: (sitterId: Id) -> (variant {
+                                              err: text;
+                                              ok;
+                                            });
+  /// Mark an ad hoc job's payment as paid.
+  updateAdHocJobPayment: (bookingId: nat, paidDate: text, paymentMethod:
+   opt PaymentMethodDetails) -> (variant {
+                                   err: text;
+                                   ok;
+                                 });
+  updateBookingStatus: (bookingId: Id, newStatus:
+   variant {
+     cancelled;
+     completed;
+     confirmed;
+   }) -> ();
+  updateCredentialChecklist: (sitterId: nat, credentials:
+   CredentialChecklist) -> (variant {
+                              err: text;
+                              ok;
+                            });
+  updateDutyStatus: (threadId: text, dutyId: text, status:
+   variant {
+     assigned;
+     done;
+     inProgress;
+   }) -> (variant {
+            err: text;
+            ok: DutyAssignment;
+          });
+  updateInvoiceAdHocItems: (bookingId: Id, items: vec AdHocLineItem) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  updateInvoicePaidDate: (bookingId: Id, paidDate: text) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  updatePaymentSplits: (input: UpdateSplits) -> ();
+  updatePaymentWithDiscount: (bookingId: Id, discountPercent: nat,
+   newTotalAmount: nat, originalAmount: nat) -> (variant {
+                                                   err: text;
+                                                   ok;
+                                                 });
+  updateServiceCompletion: (bookingId: Id, actualEndTime: opt Time,
+   finalPrice: opt nat, completionNotes: opt text, discountPercent:
+   opt nat) -> (variant {
+                  err: text;
+                  ok;
+                });
+  updateServiceLogStopTime: (input: UpdateStopTime) -> ();
+  updateSitterEarningsGoal: (goal: nat) -> (variant {
+                                              err: text;
+                                              ok;
+                                            });
+  updateSitterProfile: (input: Update) -> (Public);
+  updateSitterProfileV2: (update: SitterProfileV2Update) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  updateStripeConfig: (secretKey: text, publishableKey: text, priceId: 
+   text, liveMode: bool) -> (variant {
+                               err: text;
+                               ok;
+                             });
+  updateTaskDone: (threadId: text, dutyId: text, taskId: text, done: 
+   bool) -> (variant {
+               err: text;
+               ok: DutyTask;
+             });
+  updateTeamSplits: (teamId: text, splits: vec record {
+                                                 nat;
+                                                 nat;
+                                               }) ->
+   (variant {
+      err: text;
+      ok: Team;
+    });
+  validateCoupon: (couponCode: text) ->
+   (variant {
+      err: text;
+      ok: DealOffer;
+    }) query;
+  validateRecurringAvailability: (sitterId: nat, occurrenceDates: vec Time,
+   startTime: text, endTime: text, serviceIds: vec text, clientZip: text) ->
+   (vec OccurrenceAvailability);
+}

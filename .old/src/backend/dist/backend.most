@@ -1,0 +1,789 @@
+// Version: 1.0.0
+type AdHocLineItem__9237172 =
+  {amountCents : Int; createdAt : Int; description : Text};
+type AlternativeWindow__265214042 =
+  {date : Text; duration : Text; time : Text};
+type AuditActionV1__397782854 =
+  {
+    #AccountAnonymized;
+    #AccountFrozen;
+    #AccountUnfrozen;
+    #AdminAccessGranted;
+    #AdminAccessRevoked;
+    #BookingDeclined;
+    #BookingDeleted;
+    #DiscountApplied;
+    #GdprAnonymizationRequested;
+    #GdprExportDownloaded;
+    #GdprExportRequested;
+    #PaymentDeleted;
+    #PriceAdjusted;
+    #ServiceCompletionUpdated;
+    #SitterDeactivated;
+    #SitterDeleted;
+    #SitterReactivated;
+    #SubscriptionCancelled;
+    #SubscriptionRecorded;
+    #SupportTicketOpened;
+    #SupportTicketResolved
+  };
+type AuditActionV2__779340749 =
+  {
+    #AccountAnonymized;
+    #AccountFrozen;
+    #AccountUnfrozen;
+    #AdminAccessGranted;
+    #AdminAccessRevoked;
+    #BookingDeclined;
+    #BookingDeleted;
+    #ConsentRecorded;
+    #DiscountApplied;
+    #GdprAnonymizationRequested;
+    #GdprExportDownloaded;
+    #GdprExportRequested;
+    #PaymentDeleted;
+    #PriceAdjusted;
+    #ServiceCompletionUpdated;
+    #SitterDeactivated;
+    #SitterDeleted;
+    #SitterReactivated;
+    #SubscriptionCancelled;
+    #SubscriptionRecorded;
+    #SupportTicketOpened;
+    #SupportTicketResolved
+  };
+type AuditAction__820318858 =
+  {
+    #AccountAnonymized;
+    #AccountFrozen;
+    #AccountUnfrozen;
+    #AdHocJobCreated;
+    #AdminAccessGranted;
+    #AdminAccessRevoked;
+    #BookingDeclined;
+    #BookingDeleted;
+    #ConsentRecorded;
+    #DiscountApplied;
+    #GdprAnonymizationRequested;
+    #GdprExportDownloaded;
+    #GdprExportRequested;
+    #PaymentDeleted;
+    #PriceAdjusted;
+    #ServiceCompletionUpdated;
+    #SitterDeactivated;
+    #SitterDeleted;
+    #SitterReactivated;
+    #SubscriptionCancelled;
+    #SubscriptionRecorded;
+    #SupportTicketOpened;
+    #SupportTicketResolved
+  };
+type AuditLogPublicV1__524470231 =
+  {
+    action : AuditActionV1__397782854;
+    deletedBy : Principal;
+    entityId : Nat;
+    entityType : Text;
+    id : Id__619421783;
+    snapshot : Text;
+    timestamp : Time__688418391
+  };
+type AuditLogPublicV2__687648544 =
+  {
+    action : AuditActionV2__779340749;
+    deletedBy : Principal;
+    entityId : Nat;
+    entityType : Text;
+    id : Id__619421783;
+    snapshot : Text;
+    timestamp : Time__688418391
+  };
+type AvailabilityEntry__848491344 =
+  {dayOfWeek : Nat; endTime : Nat; startTime : Nat};
+type Availability__351700976 = {entries : [AvailabilityEntry__848491344]};
+type BookingAgreementsV2__888987584 =
+  {callRequest : Bool; communications : Bool; privacy : Bool; terms : Bool};
+type BookingAgreements__453853473 =
+  {
+    callRequest : Bool;
+    cancellationPolicy : Bool;
+    communications : Bool;
+    nonEmploymentAck : Bool;
+    privacy : Bool;
+    terms : Bool;
+    termsVersion : Nat
+  };
+type BookingGroup__770299321 =
+  {
+    clientInfo : ClientInfo__114421034;
+    createdAt : Time__688418391;
+    endTime : Text;
+    groupId : Text;
+    occurrenceIds : [Nat];
+    petInfo : [PetInfo__189660909];
+    recurrenceRule : RecurrenceRule__467917464;
+    serviceIds : [Text];
+    sitterId : Nat;
+    startTime : Text;
+    status : GroupStatus__380115798
+  };
+type BookingPublicV1__50597372 =
+  {
+    alternativeWindows : ?[AlternativeWindow__265214042];
+    clientEmail : Text;
+    clientName : Text;
+    clientPhone : Text;
+    createdAt : Time__688418391;
+    declineReason : ?Text;
+    endDate : Time__688418391;
+    id : Id__927832379;
+    isRecurring : Bool;
+    notes : Text;
+    paymentSessionId : ?Text;
+    pets : [Pet__460133559];
+    recurrenceEndDate : ?Time__688418391;
+    recurrencePattern : ?RecurrencePattern__284318290;
+    schedule : ?[DaySchedule__841151278];
+    serviceSchedule : ?[DayServiceSchedule__40846757];
+    services : [Text];
+    sitterIds : [Nat];
+    startDate : Time__688418391;
+    status : BookingStatus__163633778;
+    stripePaymentIntentId : ?Text;
+    tip : ?Nat
+  };
+type BookingPublicV2__735774413 =
+  {
+    agreements : ?BookingAgreementsV2__888987584;
+    alternativeWindows : ?[AlternativeWindow__265214042];
+    clientEmail : Text;
+    clientName : Text;
+    clientPhone : Text;
+    createdAt : Time__688418391;
+    declineReason : ?Text;
+    endDate : Time__688418391;
+    id : Id__927832379;
+    isRecurring : Bool;
+    notes : Text;
+    paymentSessionId : ?Text;
+    pets : [Pet__460133559];
+    recurrenceEndDate : ?Time__688418391;
+    recurrencePattern : ?RecurrencePattern__284318290;
+    schedule : ?[DaySchedule__841151278];
+    serviceSchedule : ?[DayServiceSchedule__40846757];
+    services : [Text];
+    sitterIds : [Nat];
+    startDate : Time__688418391;
+    status : BookingStatus__163633778;
+    stripePaymentIntentId : ?Text;
+    tip : ?Nat
+  };
+type BookingPublicV3__610227707 =
+  {
+    agreements : ?BookingAgreements__453853473;
+    alternativeWindows : ?[AlternativeWindow__265214042];
+    clientEmail : Text;
+    clientName : Text;
+    clientPhone : Text;
+    createdAt : Time__688418391;
+    declineReason : ?Text;
+    endDate : Time__688418391;
+    id : Id__927832379;
+    isRecurring : Bool;
+    notes : Text;
+    paymentSessionId : ?Text;
+    pets : [Pet__460133559];
+    recurrenceEndDate : ?Time__688418391;
+    recurrencePattern : ?RecurrencePattern__284318290;
+    schedule : ?[DaySchedule__841151278];
+    serviceSchedule : ?[DayServiceSchedule__40846757];
+    services : [Text];
+    sitterIds : [Nat];
+    startDate : Time__688418391;
+    status : BookingStatus__163633778;
+    stripePaymentIntentId : ?Text;
+    tip : ?Nat
+  };
+type BookingStatus__163633778 =
+  {#cancelled; #completed; #confirmed; #declined; #pending};
+type ClientInfo__114421034 = {email : Text; name : Text; phone : Text};
+type CoBookingAssignment__286811318 = CoBookingAssignment__467929285;
+type CoBookingAssignment__467929285 =
+  {
+    assignments : [(Nat, Text)];
+    bookingId : Nat;
+    splitAmounts : [(Nat, Nat)];
+    teamId : Text
+  };
+type CredentialChecklist__64647674 =
+  {
+    hasBackgroundCheck : ?Bool;
+    hasBusinessLicense : ?Bool;
+    hasCertificationOrTraining : ?Bool;
+    hasReferences : ?Bool;
+    isInsuredAndBonded : ?Bool;
+    isProfessionalMember : ?Bool;
+    usesServiceAgreement : ?Bool
+  };
+type Data__80296667<K, V> =
+  {var count : Nat__1040412405; kvs : [var ?(K, V)]};
+type DaySchedule__841151278 =
+  {date : Time__688418391; slots : [TimeSlot__156048419]};
+type DayServiceSchedule__40846757 =
+  {date : Text; slots : [ServiceSlot__692584283]};
+type DealOffer__133113556 =
+  {
+    clientEmails : [Text];
+    couponCode : Text;
+    description : Text;
+    discountType : DiscountType__41267959;
+    discountValue : Float;
+    expirationDate : Int;
+    id : Text;
+    isActive : Bool;
+    maxUses : ?Nat;
+    redeemedBy : [Text];
+    redeemedCount : Nat;
+    sentAt : Int;
+    sitterId : Nat
+  };
+type DiscountType__41267959 = {#fixed; #percent};
+type DutyAssignment__1044544098 =
+  {
+    assignedSitterId : Nat;
+    createdAt : Int;
+    description : Text;
+    dutyId : Text;
+    status : {#assigned; #done; #inProgress};
+    tasks : [DutyTask__338769248]
+  };
+type DutyTask__338769248 =
+  {done : Bool; doneAt : ?Int; taskId : Text; taskLabel : Text};
+type GroupStatus__380115798 = {#active; #cancelled; #completed};
+type Id__591236439 = Nat;
+type Id__619421783 = Nat;
+type Id__76783442 = Nat;
+type Id__927832379 = Nat;
+type Int__616954475 = Int;
+type Int__837511138 = Int__616954475;
+type Internal__41346355<K, V> =
+  {children : [var ?Node__1000929467<K, V>]; data : Data__80296667<K, V>};
+type JobThread__595618765 =
+  {
+    bookingId : Nat;
+    createdAt : Int;
+    duties : [DutyAssignment__1044544098];
+    status : {#closed; #open};
+    teamId : Text;
+    threadId : Text
+  };
+type Leaf__712614010<K, V> = {data : Data__80296667<K, V>};
+type List__529703492<T> =
+  {
+    var blockIndex : Nat__1040412405;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__1040412405
+  };
+type List__560604548<T> = List__529703492<T>;
+type Map__222667396<K, V> = Map__912772452<K, V>;
+type Map__709709801<K, V> =
+  {var root : Node__1000929467<K, V>; var size : Nat__1040412405};
+type Map__912772452<K, V> = Map__709709801<K, V>;
+type Message__19119041 =
+  {
+    content : Text;
+    senderId : ?Principal;
+    senderName : Text;
+    timestamp : Time__688418391
+  };
+type Nat__1040412405 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__1000929467<K, V> =
+  {#internal : Internal__41346355<K, V>; #leaf : Leaf__712614010<K, V>};
+type NotificationRecord__666145773 =
+  {
+    body : Text;
+    createdAt : Int;
+    id : Nat;
+    isRead : Bool;
+    notificationType : Text;
+    recipientSitterId : Nat;
+    title : Text
+  };
+type PageComponentVisibility__391888769 =
+  {
+    showAvailability : Bool;
+    showCertifications : Bool;
+    showCredentials : Bool;
+    showGallery : Bool;
+    showPetTypes : Bool;
+    showPromo : Bool;
+    showRepeatClients : Bool;
+    showResponseTime : Bool;
+    showReviews : Bool;
+    showStats : Bool
+  };
+type PaymentMethodDetails__319177013 =
+  {
+    #applePayCash : {sitterPhone : Text};
+    #cash : {instructions : Text};
+    #venmo : {handle : Text}
+  };
+type PaymentMethod__68978920 = {#manual; #stripe};
+type PaymentSplit__357254865 =
+  {amount : Nat; paid : Bool; sitterId : Id__76783442};
+type PaymentStatus__876794400 = {#paid; #pending; #refunded};
+type PetInfo__189660909 =
+  {breed : Text; name : Text; notes : Text; type_ : Text};
+type Pet__460133559 =
+  {breed : ?Text; petName : Text; petNotes : ?Text; petType : Text};
+type PhotoConsentLog__470534016 =
+  {
+    consent1 : Bool;
+    consent2 : Bool;
+    consent3 : Bool;
+    photoUrl : Text;
+    sitterId : Nat;
+    uploadedAt : Int
+  };
+type Public__173335931 =
+  {
+    bookingId : Nat;
+    createdAt : Time__688418391;
+    rating : Float;
+    reviewText : Text
+  };
+type Public__35726477 =
+  {
+    amountCents : Nat;
+    bookingId : Nat;
+    clientName : Text;
+    createdAt : Time__688418391;
+    sitterId : Nat
+  };
+type Public__374759618 =
+  {
+    action : Text;
+    createdAt : Int;
+    id : Text;
+    sitterId : Principal;
+    used : Bool
+  };
+type Public__579169406 =
+  {
+    accessGrantedAt : ?Int;
+    accessRevokedAt : ?Int;
+    adminNotes : ?Text;
+    createdAt : Int;
+    id : Text;
+    issue : Text;
+    resolvedAt : ?Int;
+    sitterId : Principal;
+    sitterName : Text;
+    status : TicketStatus__84214631
+  };
+type Public__590275253 =
+  {
+    adHocClientContact : ?Text;
+    agreements : ?BookingAgreements__453853473;
+    alternativeWindows : ?[AlternativeWindow__265214042];
+    clientEmail : Text;
+    clientName : Text;
+    clientPhone : Text;
+    createdAt : Time__688418391;
+    declineReason : ?Text;
+    endDate : Time__688418391;
+    id : Id__927832379;
+    isAdHoc : Bool;
+    isRecurring : Bool;
+    notes : Text;
+    paymentSessionId : ?Text;
+    pets : [Pet__460133559];
+    recurrenceEndDate : ?Time__688418391;
+    recurrencePattern : ?RecurrencePattern__284318290;
+    schedule : ?[DaySchedule__841151278];
+    serviceSchedule : ?[DayServiceSchedule__40846757];
+    services : [Text];
+    sitterIds : [Nat];
+    startDate : Time__688418391;
+    status : BookingStatus__163633778;
+    stripePaymentIntentId : ?Text;
+    tip : ?Nat
+  };
+type Public__759654708 =
+  {
+    bio : Text;
+    birthdate : ?Int;
+    hourlyRate : Nat;
+    id : Nat;
+    isActive : Bool;
+    isAnonymized : ?Bool;
+    location : Text;
+    name : Text;
+    owner : ?Principal;
+    phone : Text;
+    photoUrl : Text;
+    rating : Float;
+    reviewCount : Nat;
+    serviceRates : [Public__786825652];
+    services : [Text]
+  };
+type Public__786825652 = {ratePerHour : Nat; service : Text};
+type Public__842543525 =
+  {
+    actualEndTime : ?Time__688418391;
+    adHocItems : [AdHocLineItem__9237172];
+    bookingId : Id__927832379;
+    completionNotes : ?Text;
+    confirmedAt : ?Time__688418391;
+    discountAmount : ?Nat;
+    discountPercent : ?Nat;
+    manualConfirmedBy : ?Principal;
+    method : PaymentMethod__68978920;
+    notes : ?Text;
+    originalAmount : ?Nat;
+    paidDate : ?Text;
+    paymentMethodDetails : ?PaymentMethodDetails__319177013;
+    splits : [PaymentSplit__357254865];
+    status : PaymentStatus__876794400;
+    stripePaymentIntentId : ?Text;
+    totalAmount : Nat
+  };
+type Public__99402151 =
+  {
+    bookingId : Id__927832379;
+    createdAt : Time__688418391;
+    id : Id__591236439;
+    notes : Text;
+    sitterId : Id__76783442;
+    startTime : ?Time__688418391;
+    status : ServiceStatus__973009612;
+    stopTime : ?Time__688418391
+  };
+type Public__997945918 =
+  {
+    action : AuditAction__820318858;
+    deletedBy : Principal;
+    entityId : Nat;
+    entityType : Text;
+    id : Id__619421783;
+    snapshot : Text;
+    timestamp : Time__688418391
+  };
+type RecurrencePattern__284318290 = {#biweekly; #monthly; #weekly};
+type RecurrencePattern__494870651 = {#biweekly; #monthly; #weekly};
+type RecurrenceRule__467917464 =
+  {
+    daysOfWeek : [Nat8];
+    endDate : ?Time__688418391;
+    occurrenceCount : ?Nat;
+    pattern : RecurrencePattern__494870651;
+    startDate : Time__688418391
+  };
+type ServiceSlot__692584283 =
+  {
+    durationMinutes : Nat;
+    endTime : Text;
+    ratePerHour : Nat;
+    service : Text;
+    sitterId : Nat;
+    startTime : Text
+  };
+type ServiceStatus__973009612 =
+  {#checkedIn; #completed; #inProgress; #issueReported};
+type SitterExtendedDataV1__467823801 =
+  {
+    acceptingNewClients : ?Bool;
+    bannerUrl : ?Text;
+    certificationsList : ?[Text];
+    credentialChecklist : ?CredentialChecklist__64647674;
+    galleryPhotos : ?[Text];
+    pageComponents : ?PageComponentVisibility__391888769;
+    petTypesServed : ?[Text];
+    photoConsentLogs : ?[PhotoConsentLog__470534016];
+    pinnedPromoOfferId : ?Text;
+    responseTime : ?Text
+  };
+type SitterExtendedData__647733853 =
+  {
+    acceptingNewClients : ?Bool;
+    bannerUrl : ?Text;
+    certificationsList : ?[Text];
+    credentialChecklist : ?CredentialChecklist__64647674;
+    galleryPhotos : ?[Text];
+    pageComponents : ?PageComponentVisibility__391888769;
+    petTypesServed : ?[Text];
+    photoConsentLogs : ?[PhotoConsentLog__470534016];
+    pinnedPromoOfferId : ?Text;
+    responseTime : ?Text;
+    serviceRadius : ?Nat;
+    serviceZip : ?Text
+  };
+type StripeConfiguration__673337918 =
+  {allowedCountries : [Text]; secretKey : Text};
+type SubscriptionRecord__854446148 =
+  {
+    frozenAt : ?Int;
+    isFreePlan : ?Bool;
+    isFrozen : Bool;
+    isSubscribed : Bool;
+    lastPaymentAt : ?Int;
+    stripeCustomerId : ?Text;
+    stripeSubscriptionId : ?Text;
+    subscriptionStartedAt : ?Int;
+    trialExpiredEmailSent : ?Bool;
+    trialReminderSent : ?Bool;
+    trialStartedAt : ?Int
+  };
+type TeamInvite__456295900 =
+  {
+    createdAt : Int;
+    expiresAt : Int;
+    fromSitterId : Nat;
+    inviteCode : Text;
+    inviteId : Text;
+    status : {#accepted; #declined; #expired; #pending};
+    teamId : ?Text;
+    toSitterId : ?Nat
+  };
+type TeamInvite__796239103 = TeamInvite__456295900;
+type TeamMessage__391648472 =
+  {
+    content : Text;
+    msgId : Text;
+    msgType : {#channel; #jobThread};
+    senderSitterId : Nat;
+    sentAt : Int;
+    teamId : Text;
+    threadBookingId : ?Nat
+  };
+type Team__719880597 = Team__944861453;
+type Team__944861453 =
+  {
+    createdAt : Int;
+    memberIds : [Nat];
+    name : Text;
+    splitPercentages : [(Nat, Nat)];
+    status : {#active; #dissolved};
+    teamId : Text
+  };
+type TicketStatus__84214631 = {#adminAccessing; #open; #resolved};
+type TimeSlot__156048419 =
+  {endTime : Time__688418391; startTime : Time__688418391};
+type Time__298180599 = Int__837511138;
+type Time__688418391 = Time__298180599;
+type UserProfile__491224006 = {email : ?Text; name : Text; role : Text};
+type UserRole__521596351 = {#admin; #guest; #user};
+actor {
+  stable _crmBaseUrl : Text;
+  stable _dailyTrialTimerId : Nat;
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__222667396<Principal, UserRole__521596351>
+    };
+  stable var adminEmail : Text;
+  stable var apiCountResetDate : Text;
+  stable var apiDailyCount : Nat;
+  stable var apiDailyLimit : Nat;
+  stable var apiMonthlyCount : Nat;
+  stable var apiMonthlyLimit : Nat;
+  stable appBaseUrl : Text;
+  stable appBaseUrl_ : Text;
+  stable auditLogs :
+    {
+      var root : Node__1000929467<Id__619421783, AuditLogPublicV1__524470231>;
+      var size : Nat__1040412405
+    };
+  stable auditLogsNew :
+    {
+      var root : Node__1000929467<Id__619421783, AuditLogPublicV2__687648544>;
+      var size : Nat__1040412405
+    };
+  stable auditLogsV2 :
+    {
+      var root : Node__1000929467<Id__619421783, Public__997945918>;
+      var size : Nat__1040412405
+    };
+  stable availabilities :
+    {
+      var root : Node__1000929467<Id__76783442, Availability__351700976>;
+      var size : Nat__1040412405
+    };
+  stable bookingCallRequests :
+    {
+      var root : Node__1000929467<Id__927832379, Bool>;
+      var size : Nat__1040412405
+    };
+  stable bookingGroups :
+    {
+      var root : Node__1000929467<Text, BookingGroup__770299321>;
+      var size : Nat__1040412405
+    };
+  stable bookings :
+    {
+      var root : Node__1000929467<Id__927832379, BookingPublicV1__50597372>;
+      var size : Nat__1040412405
+    };
+  stable bookingsNew :
+    {
+      var root : Node__1000929467<Id__927832379, BookingPublicV2__735774413>;
+      var size : Nat__1040412405
+    };
+  stable bookingsV3 :
+    {
+      var root : Node__1000929467<Id__927832379, BookingPublicV3__610227707>;
+      var size : Nat__1040412405
+    };
+  stable bookingsV4 :
+    {
+      var root : Node__1000929467<Id__927832379, Public__590275253>;
+      var size : Nat__1040412405
+    };
+  stable coAssignments :
+    {
+      var root : Node__1000929467<Nat, CoBookingAssignment__286811318>;
+      var size : Nat__1040412405
+    };
+  stable dayNames : [Text];
+  stable dealOfferCounterBox : {var value : Nat};
+  stable dealOffers :
+    {
+      var root : Node__1000929467<Text, DealOffer__133113556>;
+      var size : Nat__1040412405
+    };
+  stable gdprTokens :
+    {
+      var root : Node__1000929467<Text, Public__374759618>;
+      var size : Nat__1040412405
+    };
+  stable grantedAdminPrincipals :
+    {
+      var root : Node__1000929467<Principal, Bool>;
+      var size : Nat__1040412405
+    };
+  stable hardcodedAdmins : [Text];
+  stable jobThreads :
+    {
+      var root : Node__1000929467<Text, JobThread__595618765>;
+      var size : Nat__1040412405
+    };
+  stable messages :
+    {
+      var root :
+        Node__1000929467<Id__927832379, List__560604548<Message__19119041>>;
+      var size : Nat__1040412405
+    };
+  stable monthNames : [Text];
+  stable var nextAuditLogId : Nat;
+  stable var nextBookingId : Nat;
+  stable nextBookingIdBox : {var value : Nat};
+  stable var nextServiceLogId : Nat;
+  stable var nextSitterId : Nat;
+  stable notifCounterBox : {var value : Nat};
+  stable notifications :
+    {
+      var root : Node__1000929467<Nat, NotificationRecord__666145773>;
+      var size : Nat__1040412405
+    };
+  stable payments :
+    {
+      var root : Node__1000929467<Id__927832379, Public__842543525>;
+      var size : Nat__1040412405
+    };
+  stable recurringGroupCounterBox : {var value : Nat};
+  stable reviews :
+    {
+      var root :
+        Node__1000929467<Id__76783442, List__560604548<Public__173335931>>;
+      var size : Nat__1040412405
+    };
+  stable serviceLogs :
+    {
+      var root : Node__1000929467<Id__591236439, Public__99402151>;
+      var size : Nat__1040412405
+    };
+  stable serviceRates :
+    {
+      var root : Node__1000929467<Nat, Map__222667396<Text, Nat>>;
+      var size : Nat__1040412405
+    };
+  stable sitterExtended :
+    {
+      var root :
+        Node__1000929467<Id__76783442, SitterExtendedDataV1__467823801>;
+      var size : Nat__1040412405
+    };
+  stable sitterExtendedNew :
+    {
+      var root : Node__1000929467<Id__76783442, SitterExtendedData__647733853>;
+      var size : Nat__1040412405
+    };
+  stable sitterHandles :
+    {
+      var root : Node__1000929467<Id__76783442, Text>;
+      var size : Nat__1040412405
+    };
+  stable sitterLicensing :
+    {
+      var root : Node__1000929467<Id__76783442, {isGrandfathered : ?Bool}>;
+      var size : Nat__1040412405
+    };
+  stable sitterPrivate :
+    {
+      var root :
+        Node__1000929467<Id__76783442,
+                          {earningsGoal : ?Nat; emergencyContact : ?Text}>;
+      var size : Nat__1040412405
+    };
+  stable sitters :
+    {
+      var root : Node__1000929467<Id__76783442, Public__759654708>;
+      var size : Nat__1040412405
+    };
+  stable var stripeConfig : ?StripeConfiguration__673337918;
+  stable var stripeFreePlanPriceId : Text;
+  stable var stripeLiveMode : Bool;
+  stable var stripePriceId : Text;
+  stable var stripePriceIdOverride : Text;
+  stable var stripePublishableKey : Text;
+  stable var stripePublishableKeyOverride : Text;
+  stable var stripeSecretKeyOverride : Text;
+  stable var stripeWebhookSecret : Text;
+  stable subscriptionState :
+    {
+      var root : Node__1000929467<Id__76783442, SubscriptionRecord__854446148>;
+      var size : Nat__1040412405
+    };
+  stable supportTickets :
+    {
+      var root : Node__1000929467<Text, Public__579169406>;
+      var size : Nat__1040412405
+    };
+  stable teamInvites :
+    {
+      var root : Node__1000929467<Text, TeamInvite__796239103>;
+      var size : Nat__1040412405
+    };
+  stable teamMessages :
+    {
+      var root : Node__1000929467<Text, TeamMessage__391648472>;
+      var size : Nat__1040412405
+    };
+  stable teams :
+    {
+      var root : Node__1000929467<Text, Team__719880597>;
+      var size : Nat__1040412405
+    };
+  stable tips :
+    {
+      var root :
+        Node__1000929467<Id__76783442, List__560604548<Public__35726477>>;
+      var size : Nat__1040412405
+    };
+  stable userProfiles :
+    {
+      var root : Node__1000929467<Principal, UserProfile__491224006>;
+      var size : Nat__1040412405
+    }
+};

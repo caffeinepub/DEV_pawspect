@@ -1,0 +1,1384 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("/assets/fonts/PlusJakartaSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    /* LIGHT MODE — pure white surfaces, high contrast text, warm accents */
+    --background: 0.99 0.002 60;
+    --foreground: 0.12 0.015 260;
+    --card: 1.0 0 0;
+    --card-foreground: 0.12 0.015 260;
+    --popover: 1.0 0 0;
+    --popover-foreground: 0.12 0.015 260;
+    --primary: 0.45 0.16 255;
+    --primary-foreground: 0.99 0 0;
+    --secondary: 0.96 0.01 60;
+    --secondary-foreground: 0.45 0.16 255;
+    --muted: 0.96 0.008 75;
+    --muted-foreground: 0.5 0.02 75;
+    --accent: 0.72 0.18 55;
+    --accent-foreground: 0.15 0.02 55;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.9 0.01 60;
+    --input: 0.92 0.01 60;
+    --ring: 0.45 0.16 255;
+    --chart-1: 0.646 0.222 41.116;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+    --sidebar: 0.99 0.002 60;
+    --sidebar-foreground: 0.12 0.015 260;
+    --sidebar-primary: 0.45 0.16 255;
+    --sidebar-primary-foreground: 0.99 0 0;
+    --sidebar-accent: 0.93 0.025 255;
+    --sidebar-accent-foreground: 0.45 0.16 255;
+    --sidebar-border: 0.9 0.01 60;
+    --sidebar-ring: 0.45 0.16 255;
+  }
+
+  /* Dark mode — rich slate, not flat black */
+  .dark {
+    --background: 0.115 0.025 265;
+    --foreground: 0.97 0.008 75;
+    --card: 0.16 0.028 265;
+    --card-foreground: 0.97 0.008 75;
+    --popover: 0.16 0.028 265;
+    --popover-foreground: 0.97 0.008 75;
+    --primary: 0.58 0.18 255;
+    --primary-foreground: 0.99 0 0;
+    --secondary: 0.25 0.04 265;
+    --secondary-foreground: 0.8 0.01 255;
+    --muted: 0.22 0.035 265;
+    --muted-foreground: 0.6 0.02 75;
+    --accent: 0.72 0.18 55;
+    --accent-foreground: 0.15 0.02 55;
+    --destructive: 0.55 0.22 27;
+    --destructive-foreground: 0.99 0 0;
+    --border: 0.28 0.04 265;
+    --input: 0.28 0.04 265;
+    --ring: 0.58 0.18 255;
+    --chart-1: 0.646 0.222 41.116;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+    --sidebar: 0.15 0.025 265;
+    --sidebar-foreground: 0.97 0.008 75;
+    --sidebar-primary: 0.58 0.18 255;
+    --sidebar-primary-foreground: 0.99 0 0;
+    --sidebar-accent: 0.25 0.04 265;
+    --sidebar-accent-foreground: 0.8 0.01 255;
+    --sidebar-border: 0.28 0.04 265;
+    --sidebar-ring: 0.58 0.18 255;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    /* 1. TYPOGRAPHY — body copy baseline */
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* 1. TYPOGRAPHY SCALE — premium heading hierarchy */
+  h1 {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(1.375rem, 2vw, 1.75rem);
+    letter-spacing: -0.015em;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  }
+
+  /* Lead paragraph */
+  p.lead {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: oklch(var(--foreground) / 0.8);
+  }
+
+  /* Gradient tokens for premium treatments */
+  :root {
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.45 0.16 255),
+      oklch(0.55 0.18 285)
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      oklch(0.72 0.18 55),
+      oklch(0.78 0.2 35)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.99 0.002 60 / 0.4),
+      oklch(0.99 0.002 60 / 0)
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.2 0.035 265 / 0.4),
+      oklch(0.15 0.025 265 / 0)
+    );
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better focus rings */
+  :focus-visible {
+    outline: 2px solid oklch(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Better buttons */
+  button,
+  a {
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+}
+
+@layer utilities {
+  /* ─── Light mode shadow tokens ────────────────────────────────────────── */
+  .shadow-light-card {
+    box-shadow: 0 1px 2px oklch(0 0 0 / 0.05), 0 2px 4px oklch(0 0 0 / 0.06);
+  }
+
+  .shadow-light-elevated {
+    box-shadow: 0 2px 8px oklch(0 0 0 / 0.08), 0 8px 24px oklch(0 0 0 / 0.12), 0
+      16px 40px oklch(0 0 0 / 0.08);
+  }
+
+  /* ─── Credential badge styles ────────────────────────────────────────── */
+  .badge-trust-green {
+    background: oklch(0.65 0.12 130 / 0.12);
+    border: 1px solid oklch(0.65 0.12 130 / 0.3);
+    color: oklch(0.45 0.12 130);
+  }
+
+  .badge-soft-blue {
+    background: oklch(0.65 0.1 240 / 0.12);
+    border: 1px solid oklch(0.65 0.1 240 / 0.3);
+    color: oklch(0.45 0.1 240);
+  }
+
+  .badge-soft-amber {
+    background: oklch(0.85 0.14 55 / 0.15);
+    border: 1px solid oklch(0.72 0.18 55 / 0.3);
+    color: oklch(0.55 0.15 55);
+  }
+
+  /* ─── Light mode form accent ─────────────────────────────────────── */
+  .input-light {
+    background: oklch(0.99 0.002 60);
+    border: 1px solid oklch(0.88 0.012 75);
+    color: oklch(0.12 0.015 260);
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .input-light:focus {
+    border-color: oklch(var(--primary));
+    box-shadow: 0 0 0 2px oklch(var(--ring) / 0.1);
+  }
+
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* ─── Premium transitions ──────────────────────────────────── */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  /* ─── Page enter animation ────────────────────────────────── */
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out;
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.4s ease-out;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.4s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out;
+  }
+
+  .animate-pulse-soft {
+    animation: pulse-soft 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Staggered animation helpers */
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  /* ─── Card hover lift (original — keep untouched) ─────────── */
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px -8px oklch(0.45 0.16 255 / 0.18), 0 4px 16px -4px
+      oklch(0 0 0 / 0.08);
+  }
+
+  /* ─── Premium shadow (original — keep untouched) ──────────── */
+  .shadow-premium {
+    box-shadow: 0 1px 3px oklch(0 0 0 / 0.06), 0 4px 12px oklch(0 0 0 / 0.06), 0
+      8px 24px -4px oklch(0 0 0 / 0.04);
+  }
+  .shadow-premium-hover:hover {
+    box-shadow: 0 4px 16px oklch(0 0 0 / 0.08), 0 12px 32px -4px
+      oklch(0 0 0 / 0.08);
+  }
+
+  /* ─── Elevated shadow for hero and standout sections ────── */
+  .shadow-hero {
+    box-shadow: 0 2px 8px oklch(0 0 0 / 0.08), 0 8px 24px oklch(0 0 0 / 0.12), 0
+      16px 48px -4px oklch(0 0 0 / 0.08);
+  }
+
+  /* ─── Gradient text ────────────────────────────────────────── */
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── 3. GLASS MORPHISM ────────────────────────────────────── */
+  .glass-card {
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    background: oklch(0.99 0.002 60 / 0.8);
+    border: 1px solid oklch(0.88 0.012 75 / 0.6);
+    box-shadow: 0 1px 3px oklch(0 0 0 / 0.06), 0 4px 16px oklch(0 0 0 / 0.08);
+  }
+
+  .dark .glass-card {
+    background: oklch(0.18 0.03 265 / 0.78);
+    border: 1px solid oklch(1 0 0 / 0.1);
+    box-shadow: 0 8px 32px oklch(0 0 0 / 0.25), 0 2px 8px oklch(0 0 0 / 0.15),
+      inset 0 1px 0 oklch(1 0 0 / 0.06);
+  }
+
+  /* ─── Glass surface — lighter frosted panel ───────────── */
+  .glass-surface {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background: oklch(0.98 0.003 60 / 0.85);
+    border: 1px solid oklch(0.88 0.012 75 / 0.5);
+    box-shadow: 0 2px 8px oklch(0 0 0 / 0.06), 0 8px 20px oklch(0 0 0 / 0.08);
+  }
+
+  .dark .glass-surface {
+    background: oklch(0.22 0.04 265 / 0.7);
+    border: 1px solid oklch(1 0 0 / 0.12);
+    box-shadow: 0 4px 24px oklch(0 0 0 / 0.22), inset 0 1px 0
+      oklch(1 0 0 / 0.08);
+  }
+
+  /* ─── Glass panel — for dashboard stat cards and widgets ── */
+  .glass-panel {
+    backdrop-filter: blur(12px) saturate(170%);
+    -webkit-backdrop-filter: blur(12px) saturate(170%);
+    background: oklch(1 0 0 / 0.58);
+    border: 1px solid oklch(1 0 0 / 0.28);
+    box-shadow: 0 2px 16px oklch(0.45 0.16 255 / 0.06), 0 1px 4px
+      oklch(0 0 0 / 0.05), inset 0 1px 0 oklch(1 0 0 / 0.45);
+  }
+
+  .dark .glass-panel {
+    background: oklch(0.2 0.035 265 / 0.72);
+    border: 1px solid oklch(1 0 0 / 0.09);
+    box-shadow: 0 2px 16px oklch(0 0 0 / 0.2), inset 0 1px 0 oklch(1 0 0 / 0.05);
+  }
+
+  /* ─── Unavailable overlay — opaque glass with lock icon ─── */
+  .glass-unavailable {
+    backdrop-filter: blur(7px) saturate(130%);
+    -webkit-backdrop-filter: blur(7px) saturate(130%);
+    background: oklch(0.13 0.025 265 / 0.62);
+    border: 1px solid oklch(1 0 0 / 0.12);
+  }
+
+  /* ─── Glossy inset highlight on cards ──────────────────── */
+  .gloss-ring {
+    box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.22), 0 1px 3px oklch(0 0 0 / 0.06),
+      0 4px 16px oklch(0 0 0 / 0.07);
+  }
+
+  .dark .gloss-ring {
+    box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.07), 0 1px 3px oklch(0 0 0 / 0.2),
+      0 4px 16px oklch(0 0 0 / 0.22);
+  }
+
+  /* ─── Gloss ring elevated — for selected/active cards ──── */
+  .gloss-ring-elevated {
+    box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.28), 0 8px 32px
+      oklch(0.45 0.16 255 / 0.18), 0 2px 8px oklch(0 0 0 / 0.08);
+  }
+
+  .dark .gloss-ring-elevated {
+    box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.1), 0 8px 32px
+      oklch(0.45 0.16 255 / 0.25), 0 2px 8px oklch(0 0 0 / 0.28);
+  }
+
+  /* ─── Glass badge ───────────────────────────────────────── */
+  .glass-badge {
+    backdrop-filter: blur(8px) saturate(160%);
+    -webkit-backdrop-filter: blur(8px) saturate(160%);
+    background: oklch(1 0 0 / 0.18);
+    border: 1px solid oklch(1 0 0 / 0.28);
+  }
+
+  .dark .glass-badge {
+    background: oklch(0.22 0.04 265 / 0.3);
+    border: 1px solid oklch(1 0 0 / 0.12);
+  }
+
+  /* ─── Frosted nav ──────────────────────────────────────────── */
+  .frosted-nav {
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: oklch(0.99 0.003 60 / 0.88);
+    border-bottom: 1px solid oklch(0.88 0.015 255 / 0.55);
+    box-shadow: 0 1px 0 oklch(1 0 0 / 0.45), 0 2px 12px oklch(0 0 0 / 0.04);
+  }
+
+  .dark .frosted-nav {
+    background: oklch(0.14 0.025 265 / 0.92);
+    border-bottom: 1px solid oklch(1 0 0 / 0.08);
+    box-shadow: 0 1px 0 oklch(1 0 0 / 0.06), 0 2px 12px oklch(0 0 0 / 0.3);
+  }
+
+  /* ─── Bottom nav (mobile toolbar) — high opacity so always visible ─ */
+  .frosted-bottom-nav {
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: oklch(0.99 0.003 60 / 0.97);
+    border-top: 1px solid oklch(0.82 0.015 255 / 0.65);
+    box-shadow: 0 -1px 0 oklch(1 0 0 / 0.5), 0 -4px 16px oklch(0 0 0 / 0.07);
+  }
+
+  .dark .frosted-bottom-nav {
+    background: oklch(0.14 0.025 265 / 0.97);
+    border-top: 1px solid oklch(1 0 0 / 0.12);
+    box-shadow: 0 -1px 0 oklch(1 0 0 / 0.08), 0 -4px 16px oklch(0 0 0 / 0.4);
+  }
+
+  /* ─── Premium animation keyframes ──────────────────────────── */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0) translateX(-50%);
+    }
+    50% {
+      transform: translateY(6px) translateX(-50%);
+    }
+  }
+
+  .animate-bounce {
+    animation: bounce 1.8s ease-in-out infinite;
+  }
+
+  .dark .frosted-nav {
+    background: oklch(0.13 0.025 265 / 0.92);
+    border-bottom-color: oklch(1 0 0 / 0.08);
+    box-shadow: 0 1px 0 oklch(1 0 0 / 0.04), 0 2px 12px oklch(0 0 0 / 0.18);
+  }
+
+  /* ─── Active nav pill — glassmorphism glow ──────────────── */
+  .nav-pill-active {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: oklch(0.45 0.16 255 / 0.12);
+    border: 1px solid oklch(0.45 0.16 255 / 0.22);
+    box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.2);
+  }
+
+  .dark .nav-pill-active {
+    background: oklch(0.58 0.18 255 / 0.18);
+    border: 1px solid oklch(0.58 0.18 255 / 0.3);
+    box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.08);
+  }
+
+  /* ─── 15. SITTER STOREFRONT v2 ────────────────────────────── */
+  .storefront-hero {
+    @apply relative h-96 w-full overflow-hidden rounded-b-2xl;
+    background: linear-gradient(
+      135deg,
+      oklch(0.45 0.16 255 / 0.2),
+      oklch(0.58 0.18 255 / 0.15)
+    );
+  }
+
+  .storefront-hero img {
+    @apply h-full w-full object-cover;
+  }
+
+  .storefront-hero-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent;
+  }
+
+  .storefront-badge-row {
+    @apply flex flex-wrap items-center gap-2;
+  }
+
+  .storefront-badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+    background: oklch(var(--accent) / 0.15);
+    color: oklch(var(--accent));
+  }
+
+  .storefront-stats-card {
+    @apply glass-panel space-y-6 p-6;
+  }
+
+  .stat-item {
+    @apply flex flex-col gap-1;
+  }
+
+  .stat-label {
+    @apply text-xs font-semibold uppercase tracking-widest text-muted-foreground;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold text-foreground;
+  }
+
+  .storefront-calendar-dot {
+    @apply h-2 w-2 rounded-full;
+  }
+
+  .calendar-available {
+    background: oklch(0.55 0.15 130);
+  }
+
+  .calendar-booked {
+    background: oklch(var(--muted) / 0.4);
+  }
+
+  .storefront-photo-carousel {
+    @apply relative overflow-hidden rounded-2xl;
+  }
+
+  .carousel-item {
+    @apply relative h-64 w-full flex-shrink-0 overflow-hidden rounded-xl;
+  }
+
+  .carousel-item img {
+    @apply h-full w-full object-cover;
+  }
+
+  .carousel-item-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/20 to-transparent;
+  }
+
+  .storefront-promo-banner {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--accent) / 0.2) 0%,
+      oklch(var(--accent) / 0.08) 100%
+    );
+    @apply relative overflow-hidden rounded-2xl border border-accent/30 p-6;
+  }
+
+  .storefront-promo-banner::before {
+    @apply absolute inset-0 opacity-30;
+    background: repeating-linear-gradient(
+      90deg,
+      oklch(var(--accent) / 0.1) 0px,
+      oklch(var(--accent) / 0.1) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+    content: "";
+  }
+
+  .storefront-promo-content {
+    @apply relative z-10 space-y-2;
+  }
+
+  .storefront-repeat-callout {
+    @apply glass-panel relative space-y-3 p-6;
+    border: 1px solid oklch(var(--accent) / 0.3);
+  }
+
+  .repeat-count {
+    @apply text-3xl font-bold;
+    color: oklch(var(--accent));
+  }
+
+  .pet-type-icon {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full;
+    background: oklch(var(--muted) / 0.5);
+  }
+
+  .cert-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold;
+    background: oklch(var(--primary) / 0.1);
+    color: oklch(var(--primary));
+    border: 1px solid oklch(var(--primary) / 0.2);
+  }
+
+  .storefront-sticky-header {
+    @apply frosted-nav fixed top-0 z-40 w-full;
+  }
+
+  .storefront-sticky-cta {
+    @apply w-full rounded-lg px-4 py-3 font-bold;
+    background: linear-gradient(
+      90deg,
+      oklch(var(--accent)) 0%,
+      oklch(var(--accent) / 0.9) 100%
+    );
+    color: oklch(var(--accent-foreground));
+  }
+
+  /* ─── Card lift — spring spring feel ──────────────────────── */
+  .card-lift {
+    transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow
+      250ms ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 20px 60px -12px oklch(0.45 0.16 255 / 0.22), 0 8px 24px -4px
+      oklch(0 0 0 / 0.1);
+  }
+
+  /* ─── Button press micro-interaction ──────────────────────── */
+  .btn-press {
+    transition: transform 150ms ease, box-shadow 150ms ease;
+  }
+  .btn-press:active {
+    transform: scale(0.97);
+  }
+
+  /* ─── 4. PAGE TRANSITION ───────────────────────────────────── */
+  .page-enter {
+    animation: pageEnter 0.25s ease-out both;
+  }
+
+  @keyframes pageEnter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ─── 5. SKELETON SHIMMER ──────────────────────────────────── */
+  .skeleton-shimmer {
+    background: linear-gradient(
+      90deg,
+      oklch(0.92 0.01 255) 0%,
+      oklch(0.96 0.005 60) 50%,
+      oklch(0.92 0.01 255) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* ─── 6. SECTION SPACING ───────────────────────────────────── */
+  .section-gap {
+    padding-top: clamp(4rem, 6vw, 7rem);
+    padding-bottom: clamp(4rem, 6vw, 7rem);
+  }
+
+  .section-gap-sm {
+    padding-top: clamp(2rem, 4vw, 3.5rem);
+    padding-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  /* ─── 7. SITTER BIO CARD ──────────────────────────────────── */
+  .sitter-bio-card {
+    @apply relative overflow-hidden rounded-2xl bg-card shadow-premium transition-all duration-300 hover:shadow-premium-hover;
+  }
+
+  .sitter-bio-hero {
+    @apply relative h-56 w-full overflow-hidden bg-gradient-to-b from-primary/20 to-transparent;
+  }
+
+  .sitter-bio-hero img {
+    @apply h-full w-full object-cover;
+  }
+
+  .sitter-bio-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent;
+  }
+
+  .sitter-bio-content {
+    @apply space-y-4 p-6;
+  }
+
+  .sitter-name-badge {
+    @apply inline-flex items-center gap-3 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary;
+  }
+
+  .verification-badges {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .badge-chip {
+    @apply inline-flex items-center gap-1 rounded-full bg-accent/15 px-3 py-1 text-xs font-medium text-accent;
+  }
+
+  .services-pills {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .service-pill {
+    @apply rounded-full bg-gradient-to-r from-accent/20 to-accent/10 px-3 py-1 text-sm font-medium text-accent transition-all duration-200 hover:from-accent/30 hover:to-accent/20;
+  }
+
+  .rating-row {
+    @apply flex items-center gap-3;
+  }
+
+  .stars {
+    @apply flex gap-1 text-accent;
+  }
+
+  /* ─── 8. ANALYTICS CARDS — Earning/Growth Mindset ──────────── */
+  .analytics-card-hero {
+    @apply relative overflow-hidden rounded-2xl bg-card p-6 shadow-premium transition-all duration-300;
+  }
+
+  .analytics-card-hero:hover {
+    @apply shadow-premium-hover;
+  }
+
+  .analytics-card-gradient-bg {
+    @apply absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-transparent;
+  }
+
+  .analytics-card-content {
+    @apply relative z-10 space-y-3;
+  }
+
+  .analytics-label {
+    @apply text-xs font-semibold uppercase tracking-widest text-muted-foreground;
+  }
+
+  .analytics-value {
+    @apply text-3xl font-bold text-foreground;
+  }
+
+  .analytics-subtext {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .analytics-chart-container {
+    @apply mt-4 h-40 w-full;
+  }
+
+  .progress-bar-container {
+    @apply relative h-3 w-full overflow-hidden rounded-full bg-muted;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-gradient-to-r from-primary to-accent transition-all duration-500;
+  }
+
+  .earnings-goal-chip {
+    @apply inline-flex items-center gap-2 rounded-full bg-accent/20 px-4 py-2 text-sm font-semibold text-accent;
+  }
+
+  /* ─── 9. PHOTO UPLOAD ─────────────────────────────────────── */
+  .upload-zone {
+    @apply relative flex min-h-64 flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-muted/30 p-8 transition-all duration-300 hover:border-primary hover:bg-primary/5;
+  }
+
+  .upload-zone.dragover {
+    @apply border-primary bg-primary/10;
+  }
+
+  .upload-preview {
+    @apply relative h-48 w-48 overflow-hidden rounded-xl shadow-premium;
+  }
+
+  .upload-preview img {
+    @apply h-full w-full object-cover;
+  }
+
+  .upload-guidelines {
+    @apply space-y-2 rounded-lg bg-muted/50 p-4 text-xs text-muted-foreground;
+  }
+
+  .upload-guidelines li {
+    @apply flex gap-2;
+  }
+
+  .upload-guidelines strong {
+    @apply text-foreground;
+  }
+
+  /* ─── 10. TABS & STATES ───────────────────────────────────── */
+  .tab-pill {
+    @apply rounded-full px-4 py-2 text-sm font-medium transition-all duration-200;
+  }
+
+  .tab-pill.active {
+    @apply bg-primary text-primary-foreground shadow-premium;
+  }
+
+  .tab-pill.inactive {
+    @apply bg-muted/50 text-muted-foreground hover:bg-muted;
+  }
+
+  /* ─── 11. BOOKING CARDS ───────────────────────────────────── */
+  .booking-card {
+    @apply relative overflow-hidden rounded-2xl bg-card transition-all duration-300 hover:-translate-y-0.5;
+    box-shadow: var(--shadow-premium, 0 4px 24px -4px oklch(0 0 0 / 0.12));
+  }
+
+  .booking-card-header {
+    @apply flex flex-col gap-2 px-3 py-3 sm:px-5 sm:py-4;
+    border-bottom: 1px solid oklch(var(--border) / 0.5);
+  }
+
+  .booking-date-time {
+    @apply text-base font-bold text-foreground break-words;
+  }
+
+  .booking-service-label {
+    @apply text-xs font-semibold uppercase tracking-widest text-muted-foreground;
+  }
+
+  .booking-card-body {
+    @apply flex flex-col gap-4 px-3 py-3 sm:px-5 sm:py-4;
+  }
+
+  .booking-sitter-row {
+    @apply flex items-center gap-3 flex-wrap;
+  }
+
+  .booking-sitter-avatar {
+    @apply h-10 w-10 rounded-full object-cover shrink-0;
+  }
+
+  .booking-sitter-info {
+    @apply flex flex-col gap-0.5 min-w-0;
+  }
+
+  .booking-sitter-name {
+    @apply text-sm font-semibold text-foreground truncate;
+  }
+
+  .booking-sitter-location {
+    @apply text-xs text-muted-foreground truncate;
+  }
+
+  .booking-pets-label {
+    @apply text-xs font-semibold uppercase tracking-widest text-muted-foreground;
+  }
+
+  .booking-pets-list {
+    @apply flex flex-wrap gap-1.5;
+  }
+
+  .booking-pet-chip {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium text-foreground;
+    background: oklch(var(--muted) / 0.6);
+  }
+
+  .booking-card-footer {
+    @apply flex items-center gap-2 flex-wrap px-3 py-3 sm:px-5;
+    border-top: 1px solid oklch(var(--border) / 0.5);
+  }
+
+  .booking-status-badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+    background: oklch(var(--muted) / 0.4);
+  }
+
+  .booking-status-badge.paid {
+    background: oklch(0.95 0.07 145 / 0.8);
+    color: oklch(0.35 0.12 145);
+  }
+
+  .booking-status-badge.unpaid {
+    background: oklch(0.97 0.08 75 / 0.8);
+    color: oklch(0.45 0.14 55);
+  }
+
+  .booking-status-badge.pending {
+    background: oklch(0.95 0.04 245 / 0.8);
+    color: oklch(0.4 0.12 245);
+  }
+
+  /* ─── 12. "BOOK AGAIN" CARD — DISTINCT SHORTCUT ──────────── */
+  .book-again-card {
+    @apply relative overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1;
+    background: linear-gradient(
+      135deg,
+      oklch(var(--accent) / 0.08) 0%,
+      oklch(var(--accent) / 0.03) 100%
+    );
+    box-shadow: var(--shadow-premium, 0 4px 24px -4px oklch(0 0 0 / 0.12));
+  }
+
+  .book-again-card-border {
+    @apply absolute inset-0 rounded-2xl;
+    border: 1px solid oklch(var(--accent) / 0.3);
+  }
+
+  .book-again-card-content {
+    @apply relative z-10 flex flex-col gap-4 p-5;
+  }
+
+  .book-again-header {
+    @apply flex items-start justify-between;
+  }
+
+  .book-again-label {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider;
+    background: oklch(var(--accent) / 0.15);
+    color: oklch(var(--accent));
+  }
+
+  .book-again-last-date {
+    @apply text-xs font-medium text-muted-foreground;
+  }
+
+  .book-again-services {
+    @apply flex flex-col gap-2;
+  }
+
+  .book-again-service-item {
+    @apply text-sm font-medium text-foreground;
+  }
+
+  .book-again-service-sitter {
+    @apply text-xs text-muted-foreground;
+  }
+
+  .book-again-total {
+    @apply flex items-baseline gap-2;
+  }
+
+  .book-again-total-label {
+    @apply text-xs font-semibold uppercase tracking-widest text-muted-foreground;
+  }
+
+  .book-again-total-price {
+    @apply text-2xl font-bold;
+    color: oklch(var(--accent));
+  }
+
+  .book-again-button {
+    @apply w-full rounded-xl px-4 py-3 text-center font-bold transition-all duration-300 hover:-translate-y-0.5;
+    background: linear-gradient(
+      90deg,
+      oklch(var(--accent)) 0%,
+      oklch(var(--accent) / 0.9) 100%
+    );
+    color: oklch(var(--accent-foreground));
+    box-shadow: var(--shadow-premium, 0 4px 24px -4px oklch(0 0 0 / 0.12));
+  }
+
+  .book-again-button:active {
+    @apply scale-95;
+  }
+
+  /* ─── 13. LIVE BOOKING INDICATOR ──────────────────────────── */
+  .live-indicator {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-wider;
+    background: oklch(var(--primary) / 0.1);
+    color: oklch(var(--primary));
+  }
+
+  .live-indicator-dot {
+    @apply h-2 w-2 rounded-full animate-pulse;
+    background: oklch(var(--primary));
+  }
+
+  .live-shimmer-stripe {
+    @apply absolute top-0 left-0 h-1 w-full;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(var(--accent) / 0.8),
+      transparent
+    );
+    animation: shimmer-stripe 2s ease-in-out infinite;
+  }
+
+  @keyframes shimmer-stripe {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* ─── 14. FLIGHT-CARD SHIMMER — live/in-progress amber sweep ── */
+  @keyframes shimmer-sweep {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer-sweep {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(251, 191, 36, 0.65) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer-sweep 2s linear infinite;
+  }
+
+  /* ─── 16. BOOKING CARD EXPAND SPARKLE ─────────────────────── */
+  /* Amber/gold glow pulses around the card border on expand,     */
+  /* plays once (2 s) then stops — signals the card just opened. */
+  @keyframes sparkle-border {
+    0% {
+      box-shadow: 0 0 0 0 rgba(251, 191, 36, 0), 0 0 0 0 rgba(245, 158, 11, 0),
+        inset 0 1px 0 oklch(1 0 0 / 0.22), 0 1px 3px oklch(0 0 0 / 0.06), 0 4px
+        16px oklch(0 0 0 / 0.07);
+    }
+    15% {
+      box-shadow:
+        0 0 0 3px rgba(251, 191, 36, 0.55),
+        0 0 18px 4px rgba(245, 158, 11, 0.35),
+        inset 0 1px 0 oklch(1 0 0 / 0.28),
+        0 1px 3px oklch(0 0 0 / 0.06),
+        0 4px 16px oklch(0 0 0 / 0.07);
+    }
+    40% {
+      box-shadow:
+        0 0 0 4px rgba(251, 191, 36, 0.45),
+        0 0 28px 8px rgba(245, 158, 11, 0.28),
+        inset 0 1px 0 oklch(1 0 0 / 0.32),
+        0 1px 3px oklch(0 0 0 / 0.06),
+        0 8px 24px oklch(0 0 0 / 0.1);
+    }
+    70% {
+      box-shadow:
+        0 0 0 3px rgba(251, 191, 36, 0.22),
+        0 0 16px 4px rgba(245, 158, 11, 0.14),
+        inset 0 1px 0 oklch(1 0 0 / 0.22),
+        0 1px 3px oklch(0 0 0 / 0.06),
+        0 4px 16px oklch(0 0 0 / 0.07);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(251, 191, 36, 0), 0 0 0 0 rgba(245, 158, 11, 0),
+        inset 0 1px 0 oklch(1 0 0 / 0.22), 0 1px 3px oklch(0 0 0 / 0.06), 0 4px
+        16px oklch(0 0 0 / 0.07);
+    }
+  }
+
+  .animate-sparkle-border {
+    animation: sparkle-border 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  /* Expand/collapse smooth transition for card activity panels */
+  .flight-card-expand {
+    animation: fade-in-up 0.2s ease-out;
+  }
+
+  /* ─── 17. TEAMS FEATURE — Avatar stacks, invites, collaboration ─── */
+  .avatar-stack {
+    @apply flex items-center -space-x-3;
+  }
+
+  .avatar-stack-item {
+    @apply relative h-10 w-10 flex-shrink-0 rounded-full border-2;
+    border-color: oklch(var(--card));
+    object-fit: cover;
+  }
+
+  .avatar-stack-item.lg {
+    @apply h-12 w-12;
+  }
+
+  .avatar-stack-count {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold;
+    background: oklch(var(--muted));
+    color: oklch(var(--muted-foreground));
+    border: 2px solid oklch(var(--card));
+  }
+
+  /* Team card — glass panel with split labels */
+  .team-card {
+    @apply glass-panel space-y-4 p-5 transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .team-card-header {
+    @apply flex items-start justify-between gap-3;
+  }
+
+  .team-info {
+    @apply flex-1 space-y-1;
+  }
+
+  .team-name {
+    @apply text-base font-bold text-foreground;
+  }
+
+  .team-members-count {
+    @apply text-xs text-muted-foreground;
+  }
+
+  .team-split-badges {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .split-badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold;
+    background: oklch(var(--accent) / 0.15);
+    color: oklch(var(--accent));
+    border: 1px solid oklch(var(--accent) / 0.25);
+  }
+
+  /* Invite states */
+  .invite-state-pending {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold;
+    background: oklch(var(--primary) / 0.1);
+    color: oklch(var(--primary));
+    border: 1px solid oklch(var(--primary) / 0.2);
+  }
+
+  .invite-state-accepted {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold;
+    background: oklch(0.55 0.15 130 / 0.15);
+    color: oklch(0.45 0.12 130);
+    border: 1px solid oklch(0.55 0.15 130 / 0.3);
+  }
+
+  .invite-state-declined {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold;
+    background: oklch(var(--muted) / 0.5);
+    color: oklch(var(--muted-foreground));
+    border: 1px solid oklch(var(--border));
+  }
+
+  /* Collaboration chat */
+  .chat-bubble-container {
+    @apply space-y-4 p-4;
+  }
+
+  .chat-bubble {
+    @apply rounded-2xl px-4 py-3 break-words max-w-sm;
+  }
+
+  .chat-bubble.sent {
+    @apply ml-auto bg-primary text-primary-foreground;
+  }
+
+  .chat-bubble.received {
+    @apply mr-auto bg-card text-foreground border border-border;
+  }
+
+  .chat-timestamp {
+    @apply text-xs text-muted-foreground;
+  }
+
+  .chat-typing-indicator {
+    @apply flex items-center gap-1.5;
+  }
+
+  .typing-dot {
+    @apply h-2 w-2 rounded-full bg-muted-foreground animate-pulse;
+  }
+
+  /* Duty assignment chips */
+  .duty-chip {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold;
+  }
+
+  .duty-chip.assigned {
+    background: oklch(var(--accent) / 0.12);
+    color: oklch(var(--accent));
+    border: 1px solid oklch(var(--accent) / 0.25);
+  }
+
+  .duty-chip.in-progress {
+    background: oklch(var(--accent) / 0.2);
+    color: oklch(var(--accent));
+    border: 1px solid oklch(var(--accent) / 0.35);
+    box-shadow: 0 0 8px oklch(var(--accent) / 0.2);
+  }
+
+  .duty-chip.done {
+    background: oklch(0.55 0.15 130 / 0.15);
+    color: oklch(0.45 0.12 130);
+    border: 1px solid oklch(0.55 0.15 130 / 0.3);
+  }
+
+  .duty-thread-card {
+    @apply space-y-3 rounded-xl border border-border bg-card p-4;
+  }
+
+  .duty-thread-header {
+    @apply flex items-start justify-between gap-2;
+  }
+
+  .duty-thread-title {
+    @apply font-semibold text-foreground;
+  }
+
+  /* Co-booking badge */
+  .co-sitter-badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+    background: oklch(var(--accent) / 0.1);
+    color: oklch(var(--accent));
+    border: 1px solid oklch(var(--accent) / 0.2);
+  }
+
+  .co-sitter-avatars {
+    @apply inline-flex items-center -space-x-2;
+  }
+
+  .co-sitter-avatar {
+    @apply h-6 w-6 flex-shrink-0 rounded-full border border-accent object-cover;
+  }
+
+  /* Split earnings indicator */
+  .split-earnings-card {
+    @apply glass-panel space-y-4 p-6;
+  }
+
+  .earnings-summary {
+    @apply flex items-baseline justify-between gap-3;
+  }
+
+  .earnings-your-share {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .earnings-share-amount {
+    @apply text-3xl font-bold;
+    color: oklch(var(--accent));
+  }
+
+  .earnings-total-amount {
+    @apply text-xs text-muted-foreground;
+  }
+
+  .split-breakdown-row {
+    @apply flex items-center justify-between gap-2;
+  }
+
+  .split-member-name {
+    @apply text-sm font-medium text-foreground;
+  }
+
+  .split-percentage {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold;
+    background: oklch(var(--muted));
+    color: oklch(var(--muted-foreground));
+  }
+
+  /* ─── 17. SITTER STOREFRONT v3 — Premium redesign ─────────── */
+
+  /* Floating profile photo entrance */
+  @keyframes float-in {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(calc(50% + 16px)) scale(0.88);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(50%) scale(1);
+    }
+  }
+  .animate-float-in {
+    animation: float-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  /* Dark-mode skeleton shimmer (gallery placeholder) */
+  @keyframes skeleton-dark-shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  .skeleton-dark {
+    background: linear-gradient(
+      90deg,
+      oklch(0.18 0.02 265) 0%,
+      oklch(0.24 0.03 265) 50%,
+      oklch(0.18 0.02 265) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-dark-shimmer 1.8s ease-in-out infinite;
+  }
+
+  /* Storefront section wrapper — consistent paddings and max-width */
+  .storefront-section {
+    padding-block: clamp(3rem, 5vw, 5rem);
+    padding-inline: clamp(1rem, 4vw, 3rem);
+    max-width: 1280px;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  /* Section title style */
+  .storefront-section-title {
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: white;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    line-height: 1.25;
+  }
+
+  /* Premium amber glow card hover — standalone utility */
+  .storefront-card-hover {
+    transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow
+      250ms ease;
+  }
+  .storefront-card-hover:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 20px 60px oklch(0.72 0.18 55 / 0.25);
+  }
+}

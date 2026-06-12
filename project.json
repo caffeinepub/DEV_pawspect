@@ -1,0 +1,25 @@
+{
+  "overview": "Pawspect is a premium, liability-free, subscription-based SaaS 'Sitter Operating System' for independent pet sitters in the United States. Operated by Data Driven Design Group, LLC. It is a software platform only — never a service provider, employer, or gig marketplace.",
+  "features": [
+    "US-only sitter platform enforcement",
+    "Zero-liability legal framework for Data Driven Design Group, LLC",
+    "Comprehensive Terms of Service with indemnification, arbitration, force majeure",
+    "GDPR/CCPA compliance with export and anonymization tools",
+    "Versioned consent tracking with audit trail",
+    "Sitter operating system: booking, invoicing, CRM, analytics, teams",
+    "Subscription billing via Stripe",
+    "Attorney-review checklist in admin portal"
+  ],
+  "category": "business-tools",
+  "tags": [
+    "pet-sitters",
+    "saas",
+    "legal",
+    "compliance",
+    "booking",
+    "invoicing",
+    "us-only",
+    "zero-liability"
+  ],
+  "last_updated": "2026-05-04T15:05:16.132Z"
+}
