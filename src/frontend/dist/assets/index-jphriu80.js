@@ -84429,8 +84429,9 @@ function SitterDetailPage({
   const { setAgreementFlag } = useBookingDraft();
   const { data: sitter, isLoading } = useSitterProfile(sitterId);
   const { data: allSitters = [] } = useActiveSitters();
-  const allActiveSitters = allSitters.filter(
-    (s2) => s2.isActive
+  const allActiveSitters = reactExports.useMemo(
+    () => allSitters.filter((s2) => s2.isActive),
+    [allSitters]
   );
   const createBooking = useCreateBooking();
   const createRecurringGroup = useCreateRecurringBookingGroup();
@@ -84650,6 +84651,7 @@ function SitterDetailPage({
   const [contactPhoneKey, setContactPhoneKey] = reactExports.useState("");
   const [contactMatchDismissed, setContactMatchDismissed] = reactExports.useState(false);
   const contactPetFilledRef = reactExports.useRef(false);
+  const reseedAttemptedRef = reactExports.useRef(false);
   const normalizedContactEmail = contactEmailKey.includes("@") ? contactEmailKey.toLowerCase().trim() : "";
   const normalizedContactPhone = (() => {
     const digits = contactPhoneKey.replace(/\D/g, "");
@@ -84880,6 +84882,7 @@ function SitterDetailPage({
         ratePerHour: ts.hourlyRate
       }));
     });
+    if (slots.length === 0) return;
     setServiceSchedule([{ date: dateSource, slots }]);
   };
   const handleSelectSitter = (id2) => {
@@ -85142,6 +85145,8 @@ function SitterDetailPage({
   const canSubmitBooking = agreedToTerms && agreedToPrivacy && agreedToCommunications && agreedToCancellation;
   reactExports.useEffect(() => {
     var _a4;
+    if (reseedAttemptedRef.current) return;
+    reseedAttemptedRef.current = true;
     if (step !== 2) return;
     if (!sitter) return;
     const hasEmptySlots = serviceSchedule.length === 0 || serviceSchedule.every((d2) => d2.slots.length === 0);
@@ -85152,6 +85157,11 @@ function SitterDetailPage({
       seedServiceSchedule(sitterIds, services);
     }
   }, [step, sitter, allActiveSitters]);
+  reactExports.useEffect(() => {
+    if (step !== 2) {
+      reseedAttemptedRef.current = false;
+    }
+  }, [step]);
   const filteredAvailResults = useQueries({
     queries: allActiveSitters.map((s2) => ({
       queryKey: ["sitter-availability", s2.id.toString()],

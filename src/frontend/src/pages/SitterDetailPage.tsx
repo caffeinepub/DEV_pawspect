@@ -56,7 +56,13 @@ import {
   UtensilsCrossed,
   X,
 } from "lucide-react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   APP_NAME,
   BOOKING_DEFAULTS,
@@ -1243,8 +1249,9 @@ export default function SitterDetailPage({
   const { setAgreementFlag } = useBookingDraft();
   const { data: sitter, isLoading } = useSitterProfile(sitterId);
   const { data: allSitters = [] } = useActiveSitters();
-  const allActiveSitters: Public[] = (allSitters as Public[]).filter(
-    (s) => s.isActive,
+  const allActiveSitters = useMemo(
+    () => (allSitters as Public[]).filter((s) => s.isActive),
+    [allSitters],
   );
   const createBooking = useCreateBooking();
   const createRecurringGroup = useCreateRecurringBookingGroup();
@@ -1576,6 +1583,7 @@ export default function SitterDetailPage({
   const [contactMatchDismissed, setContactMatchDismissed] = useState(false);
   // Track whether pets were already prefilled from the contact step lookup
   const contactPetFilledRef = useRef(false);
+  const reseedAttemptedRef = useRef(false);
 
   // Normalize helpers (same logic as Step 0 lookup)
   const normalizedContactEmail = contactEmailKey.includes("@")
@@ -1900,6 +1908,7 @@ export default function SitterDetailPage({
         ratePerHour: ts.hourlyRate,
       }));
     });
+    if (slots.length === 0) return;
     setServiceSchedule([{ date: dateSource, slots }]);
   };
 
@@ -2284,6 +2293,8 @@ export default function SitterDetailPage({
   // Also guards the defensive spinner path so it never shows permanently.
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional retry on data arrival
   useEffect(() => {
+    if (reseedAttemptedRef.current) return;
+    reseedAttemptedRef.current = true;
     // FIX 3: Guard is now "step === 2" (was "step !== 2" — that was the bug).
     if (step !== 2) return;
     // FIX 2: Also require sitter to be loaded before retrying
@@ -2305,6 +2316,11 @@ export default function SitterDetailPage({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, sitter, allActiveSitters]);
+  useEffect(() => {
+    if (step !== 2) {
+      reseedAttemptedRef.current = false;
+    }
+  }, [step]);
 
   const filteredAvailResults = useQueries({
     queries: allActiveSitters.map((s) => ({
