@@ -7,9 +7,13 @@ import type * as React from "react";
 import { cn } from "@/lib/utils";
 
 function Select({
+  value,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
-  return <SelectPrimitive.Root data-slot="select" {...props} />;
+  const safeValue = value === "" ? undefined : value;
+  return (
+    <SelectPrimitive.Root data-slot="select" value={safeValue} {...props} />
+  );
 }
 
 function SelectGroup({
